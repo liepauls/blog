@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  font-family: 'Nunito';
+  font-weight: 300;
+}
+
+.splash {
+  height: 55vh;
+  width: 100vw;
+  object-fit: cover;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../fonts/nunito-300.woff') format('woff'),
+       url('../../fonts/nunito-300.woff2') format('woff2');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../fonts/nunito-300-italic.woff') format('woff'),
+       url('../../fonts/nunito-300-italic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../fonts/nunito-600.woff') format('woff'),
+       url('../../fonts/nunito-600.woff2') format('woff2');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../fonts/nunito-600-italic.woff') format('woff'),
+       url('../../fonts/nunito-600-italic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+}

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import Application from './components/application'
 
 import './styles/application.css'
+import 'highlight.js/styles/github-gist.css'
 
 const queryClient = new QueryClient()
 

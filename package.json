@@ -13,6 +13,7 @@
   "dependencies": {
     "autoprefixer": "^10.1.0",
     "css-loader": "^5.0.1",
+    "highlight.js": "^10.5.0",
     "postcss": "^8.2.2",
     "postcss-loader": "^4.1.0",
     "react": "^17.0.1",

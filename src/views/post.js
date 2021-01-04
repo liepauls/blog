@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { getPost } from '../utils/apiRequests'
 import { Context } from '../components/application'
+import { componentMap } from '../components/blogBlocks'
 import FormattedDate from '../components/formattedDate'
 import Tags from '../components/tags'
 import Image from '../components/image'
@@ -33,6 +34,16 @@ const Post = () => {
     }
   ), [])
 
+  const renderContent = ({ type, text, image }, i) => {
+    const Component = componentMap[type]
+
+    if (type === 'image') {
+      return <Component key={i} src={image} />
+    } else {
+      return <Component key={i}>{text}</Component>
+    }
+  }
+
   return (
     <div className='blog'>
       <div className='container text-container'>
@@ -44,7 +55,9 @@ const Post = () => {
 
         <Tags tags={post.tags} className='mt-4 mb-12' />
 
-        <p className='mt-5'>{post.content}</p>
+        <div className='mt-5'>
+          {post.content?.map(renderContent)}
+        </div>
       </div>
     </div>
   )

@@ -13,3 +13,10 @@ export const getPost = async (slug) => {
 
   return post
 }
+
+export const createPost = async (data) => {
+  const response = await fetch(`${BASE_URL}/posts`, { method: 'POST', body: data })
+  const post     = await response.json()
+
+  return post
+}

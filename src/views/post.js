@@ -1,23 +1,51 @@
-import React, { useContext } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react'
+import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 
 import { getPost } from '../utils/apiRequests'
 import { Context } from '../components/application'
+import FormattedDate from '../components/formattedDate'
+import Tags from '../components/tags'
 
 const Post = () => {
   const { slug } = useParams()
-  let   { post } = useContext(Context)
+  const context  = useContext(Context)
+  const history  = useHistory()
 
   const { isLoading, error, data } = useQuery('post', () => getPost(slug))
 
-  post = data || post || {}
+  const post = data || context.post || {}
+
+  let unlisten
+  useEffect(() => (
+    () => {
+      if (unlisten) return
+
+      unlisten = history.listen((_location, action) => {
+        if (action === 'POP') {
+          context.setPost(null)
+          unlisten()
+          unlisten = undefined
+        }
+      })
+    }
+  ), [])
 
   return (
-    <div>
-      <h2>{post.title}</h2>
-      <img src="uploads/8461443e187b83aa56bfd6bed2432d12" alt="" />
+    <div className='blog'>
+      <div className='container text-container mb-20'>
+        <img className='object-cover w-full h-full mt-16'
+             src={`http://localhost:3000/api/uploads/${post.titleImage}`} />
+
+        <FormattedDate date={post.createdAt} className='mt-10' />
+
+        <h2 className='text-2xl font-semibold'>{post.title}</h2>
+
+        <Tags tags={post.tags} className='mt-4 mb-12' />
+
+        <p className='mt-5'>{post.content}</p>
+      </div>
     </div>
   )
 }

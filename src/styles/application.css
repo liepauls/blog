@@ -1,13 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: 'Nunito';
   font-weight: 300;
 }
 
+img {
+  max-width: unset;
+}
+
 .splash {
-  height: 55vh;
-  width: 100vw;
-  object-fit: cover;
+  height: 25vh;
+  filter: grayscale(0.9);
+}
+
+.blog {
+  min-height: 100vh;
+  background: linear-gradient(0deg, rgba(239, 241, 244, 1) 0%, rgba(255, 255, 255, 1) 50%);
+}
+
+
+@media (min-width: 769px) {
+  .text-container {
+    max-width: 740px;
+    margin: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .text-container {
+    max-width: calc(100% - 2rem);
+    margin: 0 1rem;
+  }
 }
 
 @font-face {

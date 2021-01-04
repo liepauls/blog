@@ -14,8 +14,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       content: {
-        allowNull: false,
-        type: Sequelize.STRING(30000)
+        allowNull: true,
+        type: Sequelize.JSONB
       },
       urlSlug: {
         allowNull: false,

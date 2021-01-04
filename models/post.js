@@ -27,11 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     content: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: true
-      }
+      type: DataTypes.JSONB
     },
     urlSlug: {
       type: DataTypes.STRING,

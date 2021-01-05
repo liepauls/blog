@@ -40,8 +40,7 @@ const parsePostParams = ({ files, body }) => {
     content:    JSON.parse(content),
     title:      title ? title : null,
     urlSlug:    urlSlug ? urlSlug : null,
-    tags:       tags.split(', '),
-    isPublished: true
+    tags:       tags.split(', ')
   }
 }
 

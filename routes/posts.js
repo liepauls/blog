@@ -21,9 +21,10 @@ router.get('/:slug', async (request, response) => {
 
 router.post('/', getUploads(), async (request, response) => {
   try {
-    await Post.create(parsePostParams(request))
+    const post = await Post.create(parsePostParams(request))
 
-    response.sendStatus(201)
+    response.status(201)
+    response.json(post)
   } catch (e) {
     response.status(422)
     response.json(e)
@@ -37,7 +38,8 @@ const perform = async (request, response, callback) => {
     try {
       await callback(post)
 
-      response.sendStatus(200)
+      response.status(200)
+      response.json(post)
     } catch (e) {
       response.status(422)
       response.json(e)

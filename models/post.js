@@ -46,10 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     titleImage: {
       type: DataTypes.STRING
-    },
-    images: {
-      type: DataTypes.ARRAY(DataTypes.STRING)
-    },
+    }
   }, {
     scopes: {
       published: {

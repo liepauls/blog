@@ -75,14 +75,23 @@ export const ContentBlock = ({ type, image, text, onChange, onRemove, idx }) => 
   )
 }
 
+const file = (original) => {
+  if (!original) return null
+
+  const name = Math.random().toString(36).substring(2, 13)
+
+  return new File([original], name, { type: original.type })
+}
+
 export const getFormData = (title, urlSlug, tags, content, titleImage) => {
   const formData = new FormData
 
   const mappedContent = content.map(c => {
     if (c.image instanceof File) {
-      formData.append('post[images]', c.image)
+      const image = file(c.image)
 
-      return { ...c, image: c.image?.name }
+      formData.append('post[images]', image)
+      return { ...c, image: image.name }
     } else {
       return c
     }
@@ -91,7 +100,7 @@ export const getFormData = (title, urlSlug, tags, content, titleImage) => {
   formData.append('post[title]', title)
   formData.append('post[urlSlug]', urlSlug)
   formData.append('post[tags]', tags)
-  formData.append('post[titleImage]', titleImage)
+  formData.append('post[titleImage]', file(titleImage))
   formData.append('post[content]', JSON.stringify(mappedContent))
 
   return formData

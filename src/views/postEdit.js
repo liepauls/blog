@@ -79,6 +79,11 @@ const PostEdit = () => {
     )
   }
 
+  const visitPost = () => {
+    window.open(`/posts/${urlSlug}`, '_blank').focus()
+
+  }
+
   const renderContentBlock = (cntn, idx) => (
     <div key={idx}>
       <ContentBlock {...cntn}
@@ -92,9 +97,9 @@ const PostEdit = () => {
 
   const renderPublishButton = () => {
     if (published) {
-      return <Button color='blue-700' onClick={() => unpublishMutation.mutate(post.id)} className='mt-5 w-30 block ml-auto'>Unpublish</Button>
+      return <Button color='blue-700' onClick={() => unpublishMutation.mutate(post.id)} className='mt-5 w-30 block ml-3'>Unpublish</Button>
     } else {
-      return <Button color='blue-700' onClick={() => publishMutation.mutate(post.id)} className='mt-5 w-30 block ml-auto'>Publish</Button>
+      return <Button color='blue-700' onClick={() => publishMutation.mutate(post.id)} className='mt-5 w-30 block ml-3'>Publish</Button>
     }
   }
 
@@ -102,6 +107,7 @@ const PostEdit = () => {
     <div className='blog'>
       <div className='container text-container'>
         <div className='flex'>
+          <Button color='gray-700' onClick={visitPost} className='mt-5 w-30 block ml-auto'>Preview</Button>
           {renderPublishButton()}
           <Button color='red-700' onClick={() => deleteMutation.mutate(post.id)} className='mt-5 w-30 block ml-3'>Delete</Button>
         </div>

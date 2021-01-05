@@ -68,7 +68,11 @@ const Divider = () => (
 )
 
 const Image = ({ src }) => {
-  return <ImageComponent src={src} className='my-12' />
+  return (
+    <div className='w-5/6 mx-auto'>
+      <ImageComponent src={src} className='my-12' />
+    </div>
+  )
 }
 
 export const componentMap = {

@@ -16,7 +16,20 @@ export const getPost = async (slug) => {
 
 export const createPost = async (data) => {
   const response = await fetch(`${BASE_URL}/posts`, { method: 'POST', body: data })
-  const post     = await response.json()
 
-  return post
+  if (response.ok) {
+    return true
+  } else {
+    return response.json()
+  }
+}
+
+export const updatePost = async ({ id, data }) => {
+  const response = await fetch(`${BASE_URL}/posts/${id}`, { method: 'PUT', body: data })
+
+  if (response.ok) {
+    return true
+  } else {
+    return response.json()
+  }
 }

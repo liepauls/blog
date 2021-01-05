@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 
 import PostsIndex from '../views/postsIndex'
 import PostNew from '../views/postNew'
+import PostEdit from '../views/postEdit'
 import Post from '../views/post'
 
 const Context = React.createContext({
@@ -18,6 +19,10 @@ const Application = () => {
       <Switch>
         <Route path='/posts/new'>
           <PostNew />
+        </Route>
+
+        <Route path='/posts/:slug/edit'>
+          <PostEdit />
         </Route>
 
         <Route path='/posts/:slug'>

@@ -1,19 +1,34 @@
-import React, { useState, useEffect } from 'react'
-import { useMutation } from 'react-query'
+import React, { useState, useContext, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { useQuery, useMutation } from 'react-query'
 
-import { componentMap } from '../components/blogBlocks'
 import { Button, Input, ContentBlock, getFormData, normalizeUrlSlug } from '../components/formComponents'
-import { createPost } from '../utils/apiRequests'
+import { getPost, updatePost } from '../utils/apiRequests'
+import { componentMap } from '../components/blogBlocks'
+import Image from '../components/image'
 
-const PostNew = () => {
+const PostEdit = () => {
+  const { slug } = useParams()
+  const { isLoading, error, data } = useQuery('post', () => getPost(slug))
+
   const [title, setTitle]           = useState('')
   const [urlSlug, setUrlSlug]       = useState('')
   const [tags, setTags]             = useState('')
   const [content, setContent]       = useState([{ type: 'text' }])
   const [titleImage, setTitleImage] = useState(null)
 
-  const mutation      = useMutation(createPost)
-  const errors        = mutation.data?.errors
+  const mutation = useMutation(updatePost)
+  const errors   = mutation.data?.errors
+  const post     = data || {}
+
+  useEffect(() => {
+    if (post.id) {
+      setTitle(post.title)
+      setUrlSlug(post.urlSlug)
+      setTags(post.tags.join(', '))
+      setContent(post.content)
+    }
+  }, [post.id])
 
   useEffect(() => {
     if (title) {
@@ -36,17 +51,22 @@ const PostNew = () => {
   }
 
   const submit = () => {
+    getFormData(title, urlSlug, tags, content, titleImage)
+
     mutation.mutate(
-      getFormData(title, urlSlug, tags, content, titleImage)
+      { id: post.id, data: getFormData(title, urlSlug, tags, content, titleImage) }
     )
   }
 
   const renderContentBlock = (cntn, idx) => (
-    <ContentBlock {...cntn}
-                  key={idx}
-                  idx={idx}
-                  onChange={changeContent}
-                  onRemove={removeContent} />
+    <div key={idx}>
+      <ContentBlock {...cntn}
+                    idx={idx}
+                    onChange={changeContent}
+                    onRemove={removeContent} />
+
+      {cntn.image && <Image className='my-5' src={cntn.image} />}
+    </div>
   )
 
   return (
@@ -57,6 +77,7 @@ const PostNew = () => {
         <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={errors} />
 
         <Input id='titleImage' label='Title image' type='file' onChange={setTitleImage} />
+        {post.titleImage && <Image className='mb-10' src={post.titleImage} />}
 
         {content.map(renderContentBlock)}
 
@@ -67,4 +88,4 @@ const PostNew = () => {
   )
 }
 
-export default PostNew
+export default PostEdit

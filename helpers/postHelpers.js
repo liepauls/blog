@@ -2,6 +2,8 @@ const fs      = require('fs')
 const multer  = require('multer')
 const uploads = multer({ storage: multer.memoryStorage() })
 
+const { UPLOAD_DESTINATION } = require('../config/config')
+
 const ensureUploadDirectory = () => {
   let path = ''
   UPLOAD_DESTINATION.split('/').forEach(part => {

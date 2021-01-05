@@ -51,12 +51,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ARRAY(DataTypes.STRING)
     },
   }, {
-    hooks: {
-      afterDestroy: (instance, options) => {
-        instance.images.forEach(img => fs.unlink(`../${UPLOAD_DESTINATION}${img}`, err => null))
-        fs.unlink(`../${UPLOAD_DESTINATION}${instance.titleImage}`, err => null)
-      }
-    },
     scopes: {
       published: {
         where: { isPublished: true },

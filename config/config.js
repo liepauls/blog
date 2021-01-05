@@ -8,5 +8,5 @@ module.exports = {
     url: process.env.DATABASE_URL,
     dialect: 'postgres'
   },
-  UPLOAD_DESTINATION: 'uploads/'
+  UPLOAD_DESTINATION: 'public/uploads'
 }

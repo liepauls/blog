@@ -22,7 +22,7 @@ const { UPLOAD_DESTINATION } = require('./config/config')
 app.use('/api/posts', postsRouter)
 
 app.get('/api/uploads/:key', async (request, response) => {
-  fs.readFile(`${UPLOAD_DESTINATION}${request.params.key}`, (err, data) => {
+  fs.readFile(`${UPLOAD_DESTINATION}/${request.params.key}`, (err, data) => {
     if (err) {
       response.sendStatus(400)
     } else {

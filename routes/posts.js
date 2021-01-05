@@ -1,13 +1,10 @@
+const router = require('express').Router()
+
 const { Post } = require('../models')
-
-const { UPLOAD_DESTINATION } = require('../config/config')
-
-const fs      = require('fs')
-const uploads = require('multer')({ dest: UPLOAD_DESTINATION })
-const router  = require('express').Router()
+const { persistImage, parsePostParams, getUploads } = require('../helpers/postHelpers')
 
 router.get('/', async (request, response) => {
-  const posts = await Post.findAll()
+  const posts = await Post.scope('published').findAll()
 
   response.json(posts)
 })
@@ -22,53 +19,25 @@ router.get('/:slug', async (request, response) => {
   }
 })
 
-router.post('/', uploads.fields([{ name: 'post[titleImage]' }, { name: 'post[images]' }]), async (request, response) => {
-  const { title, content, tags, urlSlug } = request.body.post
-
-  const { files }   = request
-  const titleImage  = request.files['post[titleImage]'] && request.files['post[titleImage]'][0]?.filename
-  const images      = request.files['post[images]']?.map(f => f.filename)
-  let parsedContent = JSON.parse(content)
-  let mappedImage     = -1
-
-  parsedContent = parsedContent.map((c, i) => {
-    if (c.type === 'image') {
-      return { ...c, image: images[mappedImage += 1] }
-    } else {
-      return c
-    }
-  })
-
+router.post('/', getUploads(), async (request, response) => {
   try {
-    const post = await Post.create({
-      titleImage,
-      images,
-      content: parsedContent,
-      title:   title ? title : null,
-      urlSlug: urlSlug ? urlSlug : null,
-      tags:    tags.split(', ')
-    })
+    await Post.create(parsePostParams(request))
 
-    response.status(201)
-    response.json({})
+    response.sendStatus(201)
   } catch (e) {
-    Object.entries(request.files).forEach(([key, images]) => {
-      images.forEach(img => fs.unlink(img.path, err => null))
-    })
-
     response.status(422)
     response.json(e)
   }
 })
 
-router.put('/:id', async (request, response) => {
+const perform = async (request, response, callback) => {
   const post = await Post.findByPk(request.params.id)
 
   if (post) {
     try {
-      await post.update(request.body)
+      await callback(post)
 
-      response.json(post)
+      response.sendStatus(200)
     } catch (e) {
       response.status(422)
       response.json(e)
@@ -76,6 +45,29 @@ router.put('/:id', async (request, response) => {
   } else {
     response.sendStatus(404)
   }
+}
+router.put('/:id', getUploads(), async (request, response) => {
+  perform(request, response, (post) => (
+    post.update(parsePostParams(request))
+  ))
+})
+
+router.put('/:id/publish', async (request, response) => {
+  perform(request, response, (post) => (
+    post.update({ isPublished: true })
+  ))
+})
+
+router.put('/:id/unpublish', async (request, response) => {
+  perform(request, response, (post) => (
+    post.update({ isPublished: false })
+  ))
+})
+
+router.delete('/:id', async (request, response) => {
+  perform(request, response, (post) => (
+    post.destroy()
+  ))
 })
 
 module.exports = { router }

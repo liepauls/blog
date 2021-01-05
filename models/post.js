@@ -38,6 +38,9 @@ module.exports = (sequelize, DataTypes) => {
         uniqueness: validateUniqueness(Post, 'urlSlug')
       }
     },
+    isPublished: {
+      type: DataTypes.BOOLEAN
+    },
     tags: {
       type: DataTypes.ARRAY(DataTypes.STRING)
     },
@@ -52,6 +55,12 @@ module.exports = (sequelize, DataTypes) => {
       afterDestroy: (instance, options) => {
         instance.images.forEach(img => fs.unlink(`../${UPLOAD_DESTINATION}${img}`, err => null))
         fs.unlink(`../${UPLOAD_DESTINATION}${instance.titleImage}`, err => null)
+      }
+    },
+    scopes: {
+      published: {
+        where: { isPublished: true },
+        order: [['createdAt', 'DESC']]
       }
     },
     sequelize,

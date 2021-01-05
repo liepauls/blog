@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation } from 'react-query'
+import { useHistory } from 'react-router-dom'
 
 import { componentMap } from '../components/blogBlocks'
 import { Button, Input, ContentBlock, getFormData, normalizeUrlSlug } from '../components/formComponents'
@@ -12,8 +13,13 @@ const PostNew = () => {
   const [content, setContent]       = useState([{ type: 'text' }])
   const [titleImage, setTitleImage] = useState(null)
 
-  const mutation      = useMutation(createPost)
-  const errors        = mutation.data?.errors
+  const history  = useHistory()
+  const mutation = useMutation(createPost, {
+    onSuccess: ({ urlSlug }) => {
+      history.push(`/posts/${urlSlug}/edit`)
+    },
+    onError: () => alert('Save failed :(')
+  })
 
   useEffect(() => {
     if (title) {
@@ -35,7 +41,7 @@ const PostNew = () => {
     setContent(content.filter((_, i) => i !== idx))
   }
 
-  const submit = () => {
+  const submit = async () => {
     mutation.mutate(
       getFormData(title, urlSlug, tags, content, titleImage)
     )
@@ -52,9 +58,9 @@ const PostNew = () => {
   return (
     <div className='blog'>
       <div className='container text-container'>
-        <Input id='title' value={title} onChange={setTitle} label='Title' errors={errors} />
-        <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={errors} />
-        <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={errors} />
+        <Input id='title' value={title} onChange={setTitle} label='Title' errors={mutation.error?.errors} />
+        <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={mutation.error?.errors} />
+        <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={mutation.error?.errors} />
 
         <Input id='titleImage' label='Title image' type='file' onChange={setTitleImage} />
 

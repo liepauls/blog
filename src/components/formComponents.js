@@ -11,7 +11,7 @@ export const Button = ({ children, color, onClick, className }) => (
 export const Input = ({ id, value, onChange, label, type, rows, errors = [] }) => {
   const Component = type === 'textarea' ? 'textarea' : 'input'
   const className = type === 'file' ? 'py-1' : 'border-gray-300 border rounded-md block w-full py-1 px-2'
-  const error     = errors.find(e => e.path === id)
+  const error     = errors?.find(e => e.path === id)
   const inputRef  = useRef(null)
 
   const handledOnChange = (e) => {

@@ -1,65 +1,26 @@
 const BASE_URL = 'http://localhost:3000/api'
 
-export const getPosts = async () => {
-  const response = await fetch(`${BASE_URL}/posts`)
-  const posts    = await response.json()
-
-  return posts
-}
-
-export const getPost = async (slug) => {
-  const response = await fetch(`${BASE_URL}/posts/${slug}`)
-  const post     = await response.json()
-
-  return post
-}
-
-export const createPost = async (data) => {
-  const response = await fetch(`${BASE_URL}/posts`, { method: 'POST', body: data })
+const handleRequest = async (url, data) => {
+  const response = await fetch(`${BASE_URL}${url}`, data)
+  const json     = await response.json()
 
   if (response.ok) {
-    return true
+    return json
   } else {
-    return response.json()
+    throw json
   }
 }
 
-export const updatePost = async ({ id, data }) => {
-  const response = await fetch(`${BASE_URL}/posts/${id}`, { method: 'PUT', body: data })
+export const getPosts = async () => handleRequest('/posts')
 
-  if (response.ok) {
-    return true
-  } else {
-    return response.json()
-  }
-}
+export const getPost = async (slug) => handleRequest(`/posts/${slug}`)
 
-export const publishPost = async (id) => {
-  const response = await fetch(`${BASE_URL}/posts/${id}/publish`, { method: 'PUT' })
+export const createPost = async (data) => handleRequest('/posts', { method: 'POST', body: data })
 
-  if (response.ok) {
-    return true
-  } else {
-    return response.json()
-  }
-}
+export const updatePost = async ({ id, data }) => handleRequest(`/posts/${id}`, { method: 'PUT', body: data })
 
-export const unpublishPost = async (id) => {
-  const response = await fetch(`${BASE_URL}/posts/${id}/unpublish`, { method: 'PUT' })
+export const publishPost = async (id) => handleRequest(`/posts/${id}/publish`, { method: 'PUT' })
 
-  if (response.ok) {
-    return true
-  } else {
-    return response.json()
-  }
-}
+export const unpublishPost = async (id) => handleRequest(`/posts/${id}/unpublish`, { method: 'PUT' })
 
-export const deletePost = async (id) => {
-  const response = await fetch(`${BASE_URL}/posts/${id}`, { method: 'DELETE' })
-
-  if (response.ok) {
-    return true
-  } else {
-    return response.json()
-  }
-}
+export const deletePost = async (id) => handleRequest(`/posts/${id}`, { method: 'DELETE' })

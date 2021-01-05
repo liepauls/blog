@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery, useMutation } from 'react-query'
+import { useHistory } from 'react-router-dom'
 
 import { Button, Input, ContentBlock, getFormData, normalizeUrlSlug } from '../components/formComponents'
 import { getPost, updatePost, publishPost, unpublishPost, deletePost } from '../utils/apiRequests'
@@ -8,22 +9,37 @@ import { componentMap } from '../components/blogBlocks'
 import Image from '../components/image'
 
 const PostEdit = () => {
+  const history  = useHistory()
   const { slug } = useParams()
   const { isLoading, error, data } = useQuery('post', () => getPost(slug))
+
+  const post = data || {}
 
   const [title, setTitle]           = useState('')
   const [urlSlug, setUrlSlug]       = useState('')
   const [tags, setTags]             = useState('')
   const [content, setContent]       = useState([{ type: 'text' }])
   const [titleImage, setTitleImage] = useState(null)
+  const [published, setPublished]   = useState(false)
 
-  const mutation = useMutation(updatePost)
-  const errors   = mutation.data?.errors
-  const post     = data || {}
+  const mutation = useMutation(updatePost, {
+    onError: () => alert('Save failed :(')
+  })
 
-  const publishMutation   = useMutation(publishPost)
-  const unpublishMutation = useMutation(unpublishPost)
-  const deleteMutation    = useMutation(deletePost)
+  const publishMutation = useMutation(publishPost, {
+    onSuccess: ({ isPublished }) => setPublished(isPublished),
+    onError: () => alert('Publishing failed :(')
+  })
+
+  const unpublishMutation = useMutation(unpublishPost, {
+    onSuccess: ({ isPublished }) => setPublished(isPublished),
+    onError: () => alert('Unpublishing failed :(')
+  })
+
+  const deleteMutation = useMutation(deletePost, {
+    onSuccess: () => history.push('/posts'),
+    onError: () => alert('Deletion failed :(')
+  })
 
   useEffect(() => {
     if (post.id) {
@@ -31,6 +47,7 @@ const PostEdit = () => {
       setUrlSlug(post.urlSlug)
       setTags(post.tags.join(', '))
       setContent(post.content)
+      setPublished(post.isPublished)
     }
   }, [post.id])
 
@@ -74,7 +91,7 @@ const PostEdit = () => {
   )
 
   const renderPublishButton = () => {
-    if (post.isPublished) {
+    if (published) {
       return <Button color='blue-700' onClick={() => unpublishMutation.mutate(post.id)} className='mt-5 w-30 block ml-auto'>Unpublish</Button>
     } else {
       return <Button color='blue-700' onClick={() => publishMutation.mutate(post.id)} className='mt-5 w-30 block ml-auto'>Publish</Button>
@@ -89,9 +106,9 @@ const PostEdit = () => {
           <Button color='red-700' onClick={() => deleteMutation.mutate(post.id)} className='mt-5 w-30 block ml-3'>Delete</Button>
         </div>
 
-        <Input id='title' value={title} onChange={setTitle} label='Title' errors={errors} />
-        <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={errors} />
-        <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={errors} />
+        <Input id='title' value={title} onChange={setTitle} label='Title' errors={mutation.error?.errors} />
+        <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={mutation.error?.errors} />
+        <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={mutation.error?.errors} />
 
         <Input id='titleImage' label='Title image' type='file' onChange={setTitleImage} />
         {post.titleImage && <Image className='mb-10' src={post.titleImage} />}

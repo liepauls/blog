@@ -33,3 +33,33 @@ export const updatePost = async ({ id, data }) => {
     return response.json()
   }
 }
+
+export const publishPost = async (id) => {
+  const response = await fetch(`${BASE_URL}/posts/${id}/publish`, { method: 'PUT' })
+
+  if (response.ok) {
+    return true
+  } else {
+    return response.json()
+  }
+}
+
+export const unpublishPost = async (id) => {
+  const response = await fetch(`${BASE_URL}/posts/${id}/unpublish`, { method: 'PUT' })
+
+  if (response.ok) {
+    return true
+  } else {
+    return response.json()
+  }
+}
+
+export const deletePost = async (id) => {
+  const response = await fetch(`${BASE_URL}/posts/${id}`, { method: 'DELETE' })
+
+  if (response.ok) {
+    return true
+  } else {
+    return response.json()
+  }
+}

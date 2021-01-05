@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery, useMutation } from 'react-query'
 
 import { Button, Input, ContentBlock, getFormData, normalizeUrlSlug } from '../components/formComponents'
-import { getPost, updatePost } from '../utils/apiRequests'
+import { getPost, updatePost, publishPost, unpublishPost, deletePost } from '../utils/apiRequests'
 import { componentMap } from '../components/blogBlocks'
 import Image from '../components/image'
 
@@ -20,6 +20,10 @@ const PostEdit = () => {
   const mutation = useMutation(updatePost)
   const errors   = mutation.data?.errors
   const post     = data || {}
+
+  const publishMutation   = useMutation(publishPost)
+  const unpublishMutation = useMutation(unpublishPost)
+  const deleteMutation    = useMutation(deletePost)
 
   useEffect(() => {
     if (post.id) {
@@ -69,9 +73,22 @@ const PostEdit = () => {
     </div>
   )
 
+  const renderPublishButton = () => {
+    if (post.isPublished) {
+      return <Button color='blue-700' onClick={() => unpublishMutation.mutate(post.id)} className='mt-5 w-30 block ml-auto'>Unpublish</Button>
+    } else {
+      return <Button color='blue-700' onClick={() => publishMutation.mutate(post.id)} className='mt-5 w-30 block ml-auto'>Publish</Button>
+    }
+  }
+
   return (
     <div className='blog'>
       <div className='container text-container'>
+        <div className='flex'>
+          {renderPublishButton()}
+          <Button color='red-700' onClick={() => deleteMutation.mutate(post.id)} className='mt-5 w-30 block ml-3'>Delete</Button>
+        </div>
+
         <Input id='title' value={title} onChange={setTitle} label='Title' errors={errors} />
         <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={errors} />
         <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={errors} />

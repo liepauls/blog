@@ -57,7 +57,6 @@ export const ContentBlock = ({ type, image, text, onChange, onRemove, idx }) => 
         </Button>
       </div>
 
-
       {!isImage && type !== 'divider' &&
         <Input id={`text-${idx}`}
                value={text || ''}

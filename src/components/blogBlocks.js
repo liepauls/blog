@@ -27,9 +27,28 @@ const Header = ({ children }) => (
   <h2 className='text-2xl font-semibold mb-5 mt-12'>{children}</h2>
 )
 
-const Text = ({ children }) => (
-  <p className='text-justify leading-relaxed'>{children}</p>
-)
+const urlWithLabelRegex = /(https?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]{{[^}}]+}})/gi
+const urlRegex          = /https?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]/i
+const labelRegex        = /{{([^}}]+)}}/
+
+const Text = ({ children }) => {
+  const text = children.split(urlWithLabelRegex).map((fragment, idx) => {
+    if (fragment.match(urlWithLabelRegex)) {
+      const href  = fragment.match(urlRegex)
+      const label = fragment.match(labelRegex)[1]
+
+      return (
+        <a key={idx} className='hover:text-blue-900 underline' href={href} target='_blank'>
+          {label}
+        </a>
+      )
+    } else {
+      return fragment
+    }
+  })
+
+  return <p className='text-justify leading-relaxed'>{text}</p>
+}
 
 const List = ({ children }) => (
   <ul className='list-disc pl-16 mt-4'>

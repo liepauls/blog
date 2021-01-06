@@ -9,7 +9,7 @@ app.use(logger('dev'))
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(express.static('./build'))
+app.use(express.static('./client/build'))
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(require('cors')())
@@ -32,7 +32,7 @@ app.get('/api/uploads/:key', async (request, response) => {
 })
 
 app.get('/*', (request, response) => {
-  response.sendFile('./build/index.html', { root: __dirname })
+  response.sendFile('./client/build/index.html', { root: __dirname })
 })
 
 module.exports = app

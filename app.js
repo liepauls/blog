@@ -1,5 +1,4 @@
 const express = require('express')
-const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const fs = require('fs')
@@ -15,8 +14,6 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(require('cors')())
 }
 
-console.log(process.env)
-
 const { router: postsRouter } = require('./routes/posts')
 
 const { UPLOAD_DESTINATION } = require('./config/config')
@@ -26,7 +23,7 @@ app.use('/api/posts', postsRouter)
 app.get('/api/uploads/:key', async (request, response) => {
   fs.readFile(`${UPLOAD_DESTINATION}/${request.params.key}`, (err, data) => {
     if (err) {
-      response.sendStatus(400)
+      response.sendStatus(404)
     } else {
       response.send(data)
     }

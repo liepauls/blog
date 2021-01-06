@@ -6,9 +6,10 @@ const fs = require('fs')
 const app = express()
 
 app.use(logger('dev'))
+app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
+app.use(express.static('./build'))
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(require('cors')())
@@ -28,6 +29,10 @@ app.get('/api/uploads/:key', async (request, response) => {
       response.send(data)
     }
   })
+})
+
+app.get('/*', (request, response) => {
+  response.sendFile('./build/index.html', { root: __dirname })
 })
 
 module.exports = app

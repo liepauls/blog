@@ -15,6 +15,8 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(require('cors')())
 }
 
+console.log(process.env)
+
 const { router: postsRouter } = require('./routes/posts')
 
 const { UPLOAD_DESTINATION } = require('./config/config')

@@ -58,6 +58,8 @@ const PostNew = () => {
   return (
     <div className='blog'>
       <div className='container text-container'>
+        <input className='border-gray-300 border rounded-md block w-full py-1 px-2 my-4' id='secret' />
+
         <Input id='title' value={title} onChange={setTitle} label='Title' errors={mutation.error?.errors} />
         <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={mutation.error?.errors} />
         <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={mutation.error?.errors} />

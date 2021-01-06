@@ -32,6 +32,8 @@ const urlRegex          = /https?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%
 const labelRegex        = /{{([^}}]+)}}/
 
 const Text = ({ children }) => {
+  if (!children) return null
+
   const text = children.split(urlWithLabelRegex).map((fragment, idx) => {
     if (fragment.match(urlWithLabelRegex)) {
       const href  = fragment.match(urlRegex)

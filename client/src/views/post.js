@@ -57,17 +57,17 @@ const Post = () => {
   return (
     <div className='blog'>
       <div className='container text-container'>
-        {renderBackButton('mt-2 mb-3 md:mt-3 md:mb-5')}
+        {renderBackButton('my-3 md:my-5')}
 
         <Image src={post.titleImage} />
 
-        <FormattedDate date={post.createdAt} className='mt-10' />
+        <FormattedDate date={post.createdAt} className='mt-10 mb-1' />
 
-        <h2 className='text-3xl font-semibold'>{post.title}</h2>
+        <h2 className='text-4xl font-semibold'>{post.title}</h2>
 
-        <Tags tags={post.tags} className='mt-4 mb-12' />
+        <Tags tags={post.tags} className='mt-2 mb-12' />
 
-        <div className='mt-5'>
+        <div className='mt-5 flex flex-col'>
           {post.content?.map(renderContent)}
         </div>
 

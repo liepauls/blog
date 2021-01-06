@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery, useMutation } from 'react-query'
 import { useHistory } from 'react-router-dom'
 
-import { Button, Input, ContentBlock, getFormData, normalizeUrlSlug } from '../components/formComponents'
+import { Button, Input, ContentBlock, SecretInput, getFormData, normalizeUrlSlug } from '../components/formComponents'
 import { getPost, updatePost, publishPost, unpublishPost, deletePost } from '../utils/apiRequests'
 import { componentMap } from '../components/blogBlocks'
 import Image from '../components/image'
@@ -112,7 +112,7 @@ const PostEdit = () => {
           <Button color='red-700' onClick={() => deleteMutation.mutate(post.id)} className='mt-5 w-30 block ml-3'>Delete</Button>
         </div>
 
-        <input className='border-gray-300 border rounded-md block w-full py-1 px-2 my-4' id='secret' />
+        <SecretInput />
 
         <Input id='title' value={title} onChange={setTitle} label='Title' errors={mutation.error?.errors} />
         <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={mutation.error?.errors} />

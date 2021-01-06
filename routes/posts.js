@@ -4,7 +4,7 @@ const { Post } = require('../models')
 const { parsePostParams, getUploads } = require('../helpers/postHelpers')
 
 const unauthorized = ({ body }) => (
-  body.secret !== process.env.SECRET || process.env.SECRET?.length < 10
+  body.secret !== process.env.SECRET
 )
 
 const perform = async (request, response, callback) => {

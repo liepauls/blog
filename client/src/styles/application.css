@@ -19,9 +19,12 @@ img {
 
 .blog {
   min-height: 100vh;
-  background: linear-gradient(0deg, rgba(239, 241, 244, 1) 0%, rgba(255, 255, 255, 1) 50%);
+  background: linear-gradient(0deg, rgba(243, 244, 247, 1), rgba(255, 255, 255, 1));
 }
 
+.safari-scale-wrapper {
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
 
 @media (min-width: 769px) {
   .text-container {

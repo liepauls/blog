@@ -3,7 +3,7 @@ import { useMutation } from 'react-query'
 import { useHistory } from 'react-router-dom'
 
 import { componentMap } from '../components/blogBlocks'
-import { Button, Input, ContentBlock, getFormData, normalizeUrlSlug } from '../components/formComponents'
+import { Button, Input, ContentBlock, SecretInput, getFormData, normalizeUrlSlug } from '../components/formComponents'
 import { createPost } from '../utils/apiRequests'
 
 const PostNew = () => {
@@ -58,7 +58,7 @@ const PostNew = () => {
   return (
     <div className='blog'>
       <div className='container text-container'>
-        <input className='border-gray-300 border rounded-md block w-full py-1 px-2 my-4' id='secret' />
+        <SecretInput />
 
         <Input id='title' value={title} onChange={setTitle} label='Title' errors={mutation.error?.errors} />
         <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={mutation.error?.errors} />

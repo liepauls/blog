@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 
@@ -13,20 +13,24 @@ import splash from '../../images/splash.jpg'
 const PostsIndex = () => {
   const { isLoading, error, data } = useQuery('posts', getPosts)
 
-  const { setPost } = useContext(Context)
+  const [shadow, setShadow] = useState(null)
+  const { setPost }         = useContext(Context)
 
   return (
     <div className='blog'>
-      <img className='object-cover w-screen splash shadow-md' src={splash} alt='splash' />
+      <img className={`object-cover w-screen splash ${shadow && 'shadow-md'}`}
+           src={splash}
+           alt='splash'
+           onLoad={() => setShadow(true)} />
 
       <div className='container text-container'>
         {data?.map((post, idx) => (
           <React.Fragment key={post.id}>
             {idx > 0 && <hr className='mx-auto w-4/5 border-gray-150' />}
 
-            <div className='md:flex my-10 md:my-20'>
+            <div className='md:flex my-5 md:my-20'>
               <Link to={`/posts/${post.urlSlug}`} onClick={() => setPost(post)}>
-                <div className='w-full md:h-44 md:w-44 rounded-lg overflow-hidden'>
+                <div className='w-full md:h-44 md:w-44 rounded-lg overflow-hidden safari-scale-wrapper'>
                   <Image className='rounded-lg transform-gpu hover:scale-110 duration-150'
                          src={post.titleImage} />
                 </div>

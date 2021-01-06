@@ -31,7 +31,8 @@ export const Input = ({ id, value, onChange, label, type, rows, errors = [] }) =
                  onChange={handledOnChange}
                  type={type}
                  ref={inputRef}
-                 rows={rows} />
+                 rows={rows}
+                 autoComplete='off' />
       {error && <div className='text-red-700'>{error.message}</div>}
     </div>
   )
@@ -108,4 +109,8 @@ export const getFormData = (title, urlSlug, tags, content, titleImage) => {
 
 export const normalizeUrlSlug = (string) => (
   string.toLowerCase().replace(/[^a-z0-9\s\-+]/ig, '').replace(/\s+/g, '-')
+)
+
+export const SecretInput = () => (
+  <input className='border-gray-300 border rounded-md block w-full py-1 px-2 my-4' id='secret' autoComplete='off' />
 )

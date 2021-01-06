@@ -1,5 +1,3 @@
-const BASE_URL = 'http://localhost:3000/api'
-
 const handleRequest = async (url, data = {}) => {
   if (data.method) {
     const secret = document.querySelector('#secret').value
@@ -12,7 +10,7 @@ const handleRequest = async (url, data = {}) => {
     }
   }
 
-  const response = await fetch(`${BASE_URL}${url}`, data)
+  const response = await fetch(`${process.env.API_URL}${url}`, data)
   const json     = await response.json()
 
   if (response.ok) {

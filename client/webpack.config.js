@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   output: {
@@ -44,7 +45,8 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: 'src/index.html',
       favicon: 'images/favicon.ico'
-    })
+    }),
+    new webpack.EnvironmentPlugin(['API_URL'])
   ],
   devServer: {
     historyApiFallback: true

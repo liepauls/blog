@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Nunito';
+  font-weight: 300;
+}
+
+img {
+  max-width: unset;
+}
+
+.splash {
+  height: 25vh;
+  filter: grayscale(0.9);
+}
+
+.blog {
+  min-height: 100vh;
+  background: linear-gradient(0deg, rgba(239, 241, 244, 1) 0%, rgba(255, 255, 255, 1) 50%);
+}
+
+
+@media (min-width: 769px) {
+  .text-container {
+    max-width: 740px;
+    margin: auto;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .text-container {
+    max-width: calc(100% - 2rem);
+    margin: 0 1rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../fonts/nunito-300.woff') format('woff'),
+       url('../../fonts/nunito-300.woff2') format('woff2');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../fonts/nunito-300-italic.woff') format('woff'),
+       url('../../fonts/nunito-300-italic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../fonts/nunito-600.woff') format('woff'),
+       url('../../fonts/nunito-600.woff2') format('woff2');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../fonts/nunito-600-italic.woff') format('woff'),
+       url('../../fonts/nunito-600-italic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+}

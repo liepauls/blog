@@ -1,7 +1,33 @@
 const router = require('express').Router()
 
 const { Post } = require('../models')
-const { persistImage, parsePostParams, getUploads } = require('../helpers/postHelpers')
+const { parsePostParams, getUploads } = require('../helpers/postHelpers')
+
+const unauthorized = ({ body }) => (
+  body.secret !== process.env.SECRET || process.env.SECRET?.length < 10
+)
+
+const perform = async (request, response, callback) => {
+  if (unauthorized(request)) {
+    return response.sendStatus(401)
+  }
+
+  const post = await Post.findByPk(request.params.id)
+
+  if (post) {
+    try {
+      await callback(post)
+
+      response.status(200)
+      response.json(post)
+    } catch (e) {
+      response.status(422)
+      response.json(e)
+    }
+  } else {
+    response.sendStatus(404)
+  }
+}
 
 router.get('/', async (request, response) => {
   const posts = await Post.scope('published').findAll()
@@ -20,6 +46,10 @@ router.get('/:slug', async (request, response) => {
 })
 
 router.post('/', getUploads(), async (request, response) => {
+  if (unauthorized(request)) {
+    return response.sendStatus(401)
+  }
+
   try {
     const post = await Post.create(parsePostParams(request))
 
@@ -31,23 +61,6 @@ router.post('/', getUploads(), async (request, response) => {
   }
 })
 
-const perform = async (request, response, callback) => {
-  const post = await Post.findByPk(request.params.id)
-
-  if (post) {
-    try {
-      await callback(post)
-
-      response.status(200)
-      response.json(post)
-    } catch (e) {
-      response.status(422)
-      response.json(e)
-    }
-  } else {
-    response.sendStatus(404)
-  }
-}
 router.put('/:id', getUploads(), async (request, response) => {
   perform(request, response, (post) => (
     post.update(parsePostParams(request))

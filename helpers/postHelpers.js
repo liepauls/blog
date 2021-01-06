@@ -48,4 +48,4 @@ const getUploads = () => (
   uploads.fields([{ name: 'post[titleImage]' }, { name: 'post[images]' }])
 )
 
-module.exports = { persistImage, parsePostParams, getUploads }
+module.exports = { parsePostParams, getUploads }

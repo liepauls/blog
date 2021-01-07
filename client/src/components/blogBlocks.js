@@ -4,22 +4,16 @@ import Highlight from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
 import ruby       from 'highlight.js/lib/languages/ruby'
 import css        from 'highlight.js/lib/languages/css'
-import scss       from 'highlight.js/lib/languages/scss'
 import sql        from 'highlight.js/lib/languages/sql'
 import xml        from 'highlight.js/lib/languages/xml'
 import bash       from 'highlight.js/lib/languages/bash'
-import dockerfile from 'highlight.js/lib/languages/dockerfile'
-import yaml       from 'highlight.js/lib/languages/yaml'
 
 Highlight.registerLanguage('javascript', javascript)
 Highlight.registerLanguage('ruby', ruby)
 Highlight.registerLanguage('css', css)
-Highlight.registerLanguage('scss', scss)
 Highlight.registerLanguage('sql', sql)
 Highlight.registerLanguage('xml', xml)
 Highlight.registerLanguage('bash', bash)
-Highlight.registerLanguage('dockerfile', dockerfile)
-Highlight.registerLanguage('yaml', yaml)
 
 import ImageComponent from './image'
 

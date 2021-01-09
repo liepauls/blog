@@ -20,6 +20,14 @@ const Post = () => {
 
   const post = data || context.post || {}
 
+  useEffect(() => {
+    if (!post.title) return
+    const ogTitle = document.createElement('meta')
+    ogTitle.setAttribute('og:title', post.title)
+
+    document.querySelector('head').appendChild(ogTitle)
+  }, [post.title])
+
   let unlisten
   useEffect(() => (
     () => {

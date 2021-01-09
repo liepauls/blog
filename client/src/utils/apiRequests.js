@@ -11,12 +11,18 @@ const handleRequest = async (url, data = {}) => {
   }
 
   const response = await fetch(`${process.env.API_URL}${url}`, data)
-  const json     = await response.json()
+
+  let json
+  if (response.status === 404 || response.status === 401) {
+    json = null
+  } else {
+    json = await response.json()
+  }
 
   if (response.ok) {
     return json
   } else {
-    throw json
+    throw json || response.status
   }
 }
 

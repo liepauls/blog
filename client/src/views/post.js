@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 
+import NotFound from './notFound'
 import { getPost } from '../utils/apiRequests'
 import { Context } from '../components/application'
 import { componentMap } from '../components/blogBlocks'
@@ -15,7 +16,7 @@ const Post = () => {
   const context  = useContext(Context)
   const history  = useHistory()
 
-  const { isLoading, error, data } = useQuery('post', () => getPost(slug))
+  const { isLoading, error, data } = useQuery('post', () => getPost(slug), { retry: false })
 
   const post = data || context.post || {}
 
@@ -54,27 +55,33 @@ const Post = () => {
     }
   }
 
-  return (
-    <div className='blog'>
-      <div className='container text-container'>
-        {renderBackButton('my-3 md:my-5')}
+  if (error === 404) {
+    return <NotFound />
+  } else if (!isLoading) {
+    return (
+      <div className='blog'>
+        <div className='container text-container'>
+          {renderBackButton('my-3 md:my-5')}
 
-        <Image src={post.titleImage} />
+          <Image src={post.titleImage} />
 
-        <PostInfo date={post.createdAt} readTime={post.readTime} className='mt-10 mb-1' />
+          <PostInfo date={post.createdAt} readTime={post.readTime} className='mt-10 mb-1' />
 
-        <h2 className='text-4xl font-semibold'>{post.title}</h2>
+          <h2 className='text-4xl font-semibold'>{post.title}</h2>
 
-        <Tags tags={post.tags} className='mt-2 mb-12' />
+          <Tags tags={post.tags} className='mt-2 mb-12' />
 
-        <div className='mt-5 flex flex-col'>
-          {post.content?.map(renderContent)}
+          <div className='mt-5 flex flex-col'>
+            {post.content?.map(renderContent)}
+          </div>
+
+          {renderBackButton('mt-8 md:mt-12')}
         </div>
-
-        {renderBackButton('mt-8 md:mt-12')}
       </div>
-    </div>
-  )
+    )
+  } else {
+    return null
+  }
 }
 
 export default Post

@@ -5,6 +5,7 @@ import PostsIndex from '../views/postsIndex'
 import PostNew from '../views/postNew'
 import PostEdit from '../views/postEdit'
 import Post from '../views/post'
+import NotFound from '../views/notFound'
 
 const Context = React.createContext({
   post: null,
@@ -17,25 +18,30 @@ const Application = () => {
   return (
     <Context.Provider value={{ post, setPost }}>
       <Switch>
-        <Route path='/posts/new'>
+        <Route exact path='/posts/new'>
           <PostNew />
         </Route>
 
-        <Route path='/posts/:slug/edit'>
+        <Route exact path='/posts/:slug/edit'>
           <PostEdit />
         </Route>
 
-        <Route path='/posts/:slug'>
+        <Route exact path='/posts/:slug'>
           <Post />
         </Route>
 
-        <Route path='/posts'>
+        <Route exact path='/posts'>
           <PostsIndex />
         </Route>
 
-        <Route path='/'>
+        <Route exact path='/'>
           <PostsIndex />
         </Route>
+
+        <Route>
+          <NotFound />
+        </Route>
+
       </Switch>
     </Context.Provider>
   )

@@ -63,11 +63,7 @@ module.exports = (sequelize, DataTypes) => {
     titleImage: {
       type: DataTypes.STRING,
       get() {
-        const value = this.getDataValue('titleImage')
-
-        if (value) {
-          return new Image(value)
-        }
+        return new Image(this.getDataValue('titleImage'))
       }
     }
   }, {

@@ -26,7 +26,7 @@ const PostsIndex = () => {
       <div className='container text-container pb-5'>
         {data?.map((post, idx) => (
           <React.Fragment key={post.id}>
-            {idx > 0 && <hr className='mx-auto w-4/5 border-gray-150' />}
+            {idx > 0 && <hr className='mx-auto w-4/5 block border-gray-150 my-10 md:my-0' />}
 
             <div className='md:flex my-6 md:my-16'>
               <Link to={`/posts/${post.urlSlug}`} onClick={() => setPost(post)}>

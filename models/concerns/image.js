@@ -28,14 +28,10 @@ class Image {
     return filename
   }
 
-  getSignedUrl() {
+  getUrl() {
     if (!this.key) return
 
-    return s3.getSignedUrl('getObject', {
-      Bucket:  process.env.S3_BUCKET,
-      Key:     this.key,
-      Expires: 120
-    })
+    return `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com/${this.key}`
   }
 }
 

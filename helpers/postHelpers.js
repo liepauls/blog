@@ -1,8 +1,10 @@
 const fs      = require('fs')
 const multer  = require('multer')
 const uploads = multer({ storage: multer.memoryStorage() })
+const cheerio = require('cheerio')
 
-const Image = require('../models/concerns/image')
+const Image    = require('../models/concerns/image')
+const { Post } = require('../models')
 
 const parsePostParams = ({ files, body }) => {
   const { title, content, tags, urlSlug } = body.post
@@ -29,18 +31,33 @@ const serializePost = (post, options) => {
 
   if (options?.includeContent) {
     json.content.forEach(js => {
-      js.image = new Image(js.image).getSignedUrl()
+      js.image = new Image(js.image).getUrl()
     })
   } else {
     json.content = null
   }
 
-  json.titleImage = post.titleImage.getSignedUrl()
+  json.titleImage = post.titleImage.getUrl()
   json.preview    = post.preview
   json.readTime   = `${post.readTime} min`
 
   return json
 }
 
+const findPost = (urlSlug) => (
+  Post.findOne({ where: { urlSlug } })
+)
 
-module.exports = { parsePostParams, getUploads, serializePost }
+const setMetaAndRender = (response, post) => {
+  const document = cheerio.load(fs.readFileSync('./client/build/index.html', 'utf8'))
+
+  document('[property="og:title"]').attr('content', post.title)
+  document('[property="og:description"]').attr('content', post.preview)
+  document('[property="article:tag"]').attr('content', post.tags.join(', '))
+  document('[property="og:image"]').attr('content', post.titleImage.getUrl())
+  document('[property="article:published_time"]').attr('content', post.createdAt.toISOString())
+
+  response.send(document.html())
+}
+
+module.exports = { parsePostParams, getUploads, serializePost, findPost, setMetaAndRender }

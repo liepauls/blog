@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const { Post } = require('../models')
-const { parsePostParams, getUploads, serializePost } = require('../helpers/postHelpers')
+const { parsePostParams, getUploads, findPost, serializePost } = require('../helpers/postHelpers')
 
 const unauthorized = ({ body }) => (
   process.env.NODE_ENV === 'production' && body.secret !== process.env.SECRET
@@ -36,7 +36,7 @@ router.get('/', async (request, response) => {
 })
 
 router.get('/:slug', async (request, response) => {
-  const post = await Post.findOne({ where: { urlSlug: request.params.slug } })
+  const post = await findPost(request.params.slug)
 
   if (post) {
     response.json(serializePost(post, { includeContent: true }))

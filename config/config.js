@@ -7,6 +7,5 @@ module.exports = {
   production: {
     use_env_variable: 'DATABASE_URL',
     dialect: 'postgres'
-  },
-  UPLOAD_DESTINATION: 'public/uploads'
+  }
 }

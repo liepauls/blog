@@ -17,19 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const { router: postsRouter } = require('./routes/posts')
 
-const { UPLOAD_DESTINATION } = require('./config/config')
-
 app.use('/api/posts', postsRouter)
-
-app.get('/api/uploads/:key', async (request, response) => {
-  fs.readFile(`${UPLOAD_DESTINATION}/${request.params.key}`, (err, data) => {
-    if (err) {
-      response.sendStatus(404)
-    } else {
-      response.send(data)
-    }
-  })
-})
 
 app.get('/*', (request, response) => {
   response.sendFile('./client/build/index.html', { root: __dirname })

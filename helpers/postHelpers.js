@@ -36,12 +36,13 @@ const serializePost = (post, options) => {
     })
   } else {
     json.content = null
-    json.preview = text
+  }
 
-    if (json.preview.length > 200) {
-      json.preview = json.preview.slice(0, 200)
-      json.preview += '...'
-    }
+  if (text.length > 200) {
+    json.preview = text.slice(0, 200)
+    json.preview += '...'
+  } else {
+    json.preview = text
   }
 
   json.readTime = `${Math.ceil(text.split(' ').length / 200)} min`

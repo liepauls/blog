@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     get readTime() {
-      return Math.ceil(this.text.split(' ').length / 200)
+      return Math.ceil(this.text.split(' ').length / 175)
     }
 
     get preview() {

@@ -61,7 +61,7 @@ const Header = ({ children }) => (
 )
 
 const Text = ({ children }) => (
-  <p className='text-justify leading-relaxed text-lg'>{urlifyText(withNewlines(children))}</p>
+  <p className='text-justify leading-relaxed text-lg'>{withNewlines(children).map(urlifyText)}</p>
 )
 
 const List = ({ children }) => (

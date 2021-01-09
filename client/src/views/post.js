@@ -23,9 +23,39 @@ const Post = () => {
   useEffect(() => {
     if (!post.title) return
     const ogTitle = document.createElement('meta')
-    ogTitle.setAttribute('og:title', post.title)
-
+    ogTitle.setAttribute('property', 'og:title')
+    ogTitle.setAttribute('content', post.title)
     document.querySelector('head').appendChild(ogTitle)
+
+    const ogType = document.createElement('meta')
+    ogType.setAttribute('property', 'og:type')
+    ogType.setAttribute('content', 'article')
+    document.querySelector('head').appendChild(ogType)
+
+    const ogUrl = document.createElement('meta')
+    ogUrl.setAttribute('property', 'og:url')
+    ogUrl.setAttribute('content', window.location)
+    document.querySelector('head').appendChild(ogUrl)
+
+    const ogImage = document.createElement('meta')
+    ogImage.setAttribute('property', 'og:image')
+    ogImage.setAttribute('content', post.titleImage)
+    document.querySelector('head').appendChild(ogImage)
+
+    const ogPublishedAt = document.createElement('meta')
+    ogPublishedAt.setAttribute('property', 'article:published_time')
+    ogPublishedAt.setAttribute('content', post.createdAt)
+    document.querySelector('head').appendChild(ogPublishedAt)
+
+    const ogAuthor = document.createElement('meta')
+    ogAuthor.setAttribute('property', 'article:author')
+    ogAuthor.setAttribute('content', 'Pauls Liepa')
+    document.querySelector('head').appendChild(ogAuthor)
+
+    const ogTag = document.createElement('meta')
+    ogTag.setAttribute('property', 'article:tag')
+    ogTag.setAttribute('content', post.tags.join(','))
+    document.querySelector('head').appendChild(ogTag)
   }, [post.title])
 
   let unlisten

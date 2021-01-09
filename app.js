@@ -16,6 +16,16 @@ if (prod) {
   app.use(sentry.Handlers.requestHandler())
 }
 
+if (prod) {
+  app.use((request, response, next) => {
+    if (request.get('X-Forwarded-Proto') !== 'https') {
+      return response.redirect(`https://${request.get('host')}${request.url}`)
+    }
+
+    next()
+  })
+}
+
 if (!prod) {
   app.use(require('cors')())
 }

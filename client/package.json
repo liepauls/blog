@@ -4,12 +4,13 @@
   "description": "Blog frontend",
   "main": "index.js",
   "scripts": {
-    "start": "API_URL=http://localhost:3000/api webpack serve --mode development --env development --hot",
+    "start": "API_URL=http://localhost:3000/api NODE_ENV=development webpack serve",
     "build": "API_URL=/api webpack --mode=production"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sentry/react": "^5.29.2",
     "autoprefixer": "^10.1.0",
     "css-loader": "^5.0.1",
     "highlight.js": "^10.5.0",

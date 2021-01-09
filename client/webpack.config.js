@@ -46,7 +46,7 @@ module.exports = {
       template: 'src/index.html',
       favicon: 'images/favicon.ico'
     }),
-    new webpack.EnvironmentPlugin(['API_URL'])
+    new webpack.EnvironmentPlugin(['API_URL', 'NODE_ENV'])
   ],
   devServer: {
     historyApiFallback: true

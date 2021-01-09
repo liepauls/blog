@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { getPost } from '../utils/apiRequests'
 import { Context } from '../components/application'
 import { componentMap } from '../components/blogBlocks'
-import FormattedDate from '../components/formattedDate'
+import PostInfo from '../components/postInfo'
 import Tags from '../components/tags'
 import Image from '../components/image'
 
@@ -61,7 +61,7 @@ const Post = () => {
 
         <Image src={post.titleImage} />
 
-        <FormattedDate date={post.createdAt} className='mt-10 mb-1' />
+        <PostInfo date={post.createdAt} readTime={post.readTime} className='mt-10 mb-1' />
 
         <h2 className='text-4xl font-semibold'>{post.title}</h2>
 

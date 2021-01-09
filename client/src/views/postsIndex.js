@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { getPosts } from '../utils/apiRequests'
 import { Context } from '../components/application'
-import FormattedDate from '../components/formattedDate'
+import PostInfo from '../components/postInfo'
 import Tags from '../components/tags'
 import Image from '../components/image'
 
@@ -37,7 +37,7 @@ const PostsIndex = () => {
               </Link>
 
               <div className='md:ml-5'>
-                <FormattedDate date={post.createdAt} className='mt-3 md:mt-1' />
+                <PostInfo date={post.createdAt} readTime={post.readTime} />
 
                 <Link to={`/posts/${post.urlSlug}`} onClick={() => setPost(post)}>
                   <h2 className='text-2xl font-semibold mb-1 hover:text-blue-900'>{post.title}</h2>

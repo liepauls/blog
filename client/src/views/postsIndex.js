@@ -43,7 +43,7 @@ const PostsIndex = () => {
                   <h2 className='text-2xl font-semibold mb-1 hover:text-blue-900'>{post.title}</h2>
                 </Link>
 
-                <p className='text-justify'>{post.content.map(c => c.text).join('. ').slice(0, 200)}...</p>
+                <p className='text-justify'>{post.preview}</p>
 
                 <Tags tags={post.tags} className='mt-3' />
               </div>

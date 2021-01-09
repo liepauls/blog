@@ -33,6 +33,14 @@ const serializePost = (post, options) => {
     json.content.forEach(js => {
       js.image = new Image(js.image).getSignedUrl()
     })
+  } else {
+    json.content = null
+    json.preview = post.content.filter(c => c.text).map(c => c.text).join(' ')
+
+    if (json.preview.length > 200) {
+      json.preview = json.preview.slice(0, 200)
+      json.preview += '...'
+    }
   }
 
   return json

@@ -26,9 +26,6 @@ const getUploads = () => uploads.any()
 
 const serializePost = (post, options) => {
   const json = post.toJSON()
-  const text = post.content.filter(c => c.text).map(c => c.text).join(' ')
-
-  json.titleImage = post.titleImage.getSignedUrl()
 
   if (options?.includeContent) {
     json.content.forEach(js => {
@@ -38,14 +35,9 @@ const serializePost = (post, options) => {
     json.content = null
   }
 
-  if (text.length > 200) {
-    json.preview = text.slice(0, 200)
-    json.preview += '...'
-  } else {
-    json.preview = text
-  }
-
-  json.readTime = `${Math.ceil(text.split(' ').length / 200)} min`
+  json.titleImage = post.titleImage.getSignedUrl()
+  json.preview    = post.preview
+  json.readTime   = `${post.readTime} min`
 
   return json
 }

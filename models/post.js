@@ -9,6 +9,28 @@ module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
     static associate(models) {
     }
+
+    get text() {
+      if (this.textValue) {
+        return this.textValue
+      }
+
+      this.textValue = this.content.filter(c => c.text).map(c => c.text).join(' ')
+
+      return this.textValue
+    }
+
+    get readTime() {
+      return Math.ceil(this.text.split(' ').length / 200)
+    }
+
+    get preview() {
+      if (this.text.length > 200) {
+        return `${this.text.slice(0, 200)}...`
+      } else {
+        return this.text
+      }
+    }
   }
 
   Post.init({

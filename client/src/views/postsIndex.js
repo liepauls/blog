@@ -20,7 +20,7 @@ const PostsIndex = () => {
     <div className='blog'>
       <img className={`object-cover w-screen splash ${shadow && 'shadow-md'}`}
            src={splash}
-           alt='splash'
+           alt=''
            onLoad={() => setShadow(true)} />
 
       <div className='container text-container'>

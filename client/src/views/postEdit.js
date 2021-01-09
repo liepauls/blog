@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery, useMutation } from 'react-query'
 import { useHistory } from 'react-router-dom'
 
-import { Button, Input, ContentBlock, SecretInput, getFormData, normalizeUrlSlug } from '../components/formComponents'
+import { Button, Input, ContentBlock, SecretInput, getFormData, normalizeUrlSlug, contentBlock } from '../components/formComponents'
 import { getPost, updatePost, publishPost, unpublishPost, deletePost } from '../utils/apiRequests'
 import { componentMap } from '../components/blogBlocks'
 import Image from '../components/image'
@@ -12,13 +12,14 @@ const PostEdit = () => {
   const history  = useHistory()
   const { slug } = useParams()
   const { isLoading, error, data } = useQuery('post', () => getPost(slug))
+  const contentImages = useRef({})
 
   const post = data || {}
 
   const [title, setTitle]           = useState('')
   const [urlSlug, setUrlSlug]       = useState('')
   const [tags, setTags]             = useState('')
-  const [content, setContent]       = useState([{ type: 'text' }])
+  const [content, setContent]       = useState([])
   const [titleImage, setTitleImage] = useState(null)
   const [published, setPublished]   = useState(false)
 
@@ -57,41 +58,45 @@ const PostEdit = () => {
     }
   }, [title])
 
-  const changeContent = (i, property, value) => {
+  const changeContent = (uid, property, value) => {
     const newContent = [...content]
-    newContent[i][property] = value
+    const block      = newContent.find(b => b.uid === uid)
+
+    if (property === 'image') {
+      contentImages.current[uid] = value
+    } else {
+      newContent.find(b => b.uid === uid)[property] = value
+    }
+
     setContent(newContent)
   }
 
   const addContent = () => {
-    setContent([...content, { type: 'text' }])
+    setContent([...content, contentBlock()])
   }
 
-  const removeContent = (idx) => {
-    setContent(content.filter((_, i) => i !== idx))
+  const removeContent = (uid) => {
+    setContent(content.filter((block) => block.uid !== uid))
   }
 
-  const submit = () => {
-    getFormData(title, urlSlug, tags, content, titleImage)
-
+  const submit = async () => {
     mutation.mutate(
-      { id: post.id, data: getFormData(title, urlSlug, tags, content, titleImage) }
+      { id: post.id, data: getFormData(title, urlSlug, tags, titleImage, content, contentImages.current) }
     )
   }
 
   const visitPost = () => {
     window.open(`/posts/${urlSlug}`, '_blank').focus()
-
   }
 
-  const renderContentBlock = (cntn, idx) => (
-    <div key={idx}>
-      <ContentBlock {...cntn}
-                    idx={idx}
+  const renderContentBlock = (block) => (
+    <div key={block.uid}>
+      <ContentBlock {...block}
+                    idx={block.uid}
                     onChange={changeContent}
                     onRemove={removeContent} />
 
-      {cntn.image && <Image className='my-5' src={cntn.image} />}
+      {block.image && <Image className='my-5' src={block.image} />}
     </div>
   )
 

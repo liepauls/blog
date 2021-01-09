@@ -2,50 +2,41 @@ const fs      = require('fs')
 const multer  = require('multer')
 const uploads = multer({ storage: multer.memoryStorage() })
 
-const { UPLOAD_DESTINATION } = require('../config/config')
-
-const ensureUploadDirectory = () => {
-  let path = ''
-  UPLOAD_DESTINATION.split('/').forEach(part => {
-    path += `${part}/`
-
-    if (!fs.existsSync(path)) {
-      fs.mkdirSync(path)
-    }
-  })
-}
-
-const persistImage = (image) => {
-  if (!image) return
-
-  ensureUploadDirectory()
-
-  fs.writeFile(
-    `${UPLOAD_DESTINATION}/${image.originalname}`,
-    image.buffer,
-    null,
-    () => console.log('wrote file', image.originalname)
-  )
-
-  return image.originalname
-}
+const Image = require('../models/concerns/image')
 
 const parsePostParams = ({ files, body }) => {
   const { title, content, tags, urlSlug } = body.post
 
-  files['post[images]']?.forEach(i => persistImage(i))
+  const parsedContent = JSON.parse(content).map(block => {
+    block.image = Image.persist(files.find(file => file.fieldname === block.uid))
+
+    return block
+  })
 
   return {
-    titleImage: persistImage(files['post[titleImage]'] && files['post[titleImage]'][0]),
-    content:    JSON.parse(content),
+    titleImage: Image.persist(files.find(file => file.fieldname === 'post[titleImage]')),
+    content:    parsedContent,
     title:      title ? title : null,
     urlSlug:    urlSlug ? urlSlug : null,
     tags:       tags.split(', ')
   }
 }
 
-const getUploads = () => (
-  uploads.fields([{ name: 'post[titleImage]' }, { name: 'post[images]' }])
-)
+const getUploads = () => uploads.any()
 
-module.exports = { parsePostParams, getUploads }
+const serializePost = (post, options) => {
+  const json = post.toJSON()
+
+  json.titleImage = post.titleImage.getSignedUrl()
+
+  if (options?.includeContent) {
+    json.content.forEach(js => {
+      js.image = new Image(js.image).getSignedUrl()
+    })
+  }
+
+  return json
+}
+
+
+module.exports = { parsePostParams, getUploads, serializePost }

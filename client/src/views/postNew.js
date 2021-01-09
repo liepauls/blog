@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useMutation } from 'react-query'
 import { useHistory } from 'react-router-dom'
 
 import { componentMap } from '../components/blogBlocks'
-import { Button, Input, ContentBlock, SecretInput, getFormData, normalizeUrlSlug } from '../components/formComponents'
+import { Button, Input, ContentBlock, SecretInput, getFormData, normalizeUrlSlug, contentBlock } from '../components/formComponents'
 import { createPost } from '../utils/apiRequests'
 
 const PostNew = () => {
-  const [title, setTitle]           = useState('')
-  const [urlSlug, setUrlSlug]       = useState('')
-  const [tags, setTags]             = useState('')
-  const [content, setContent]       = useState([{ type: 'text' }])
-  const [titleImage, setTitleImage] = useState(null)
-
+  const contentImages = useRef({})
   const history  = useHistory()
   const mutation = useMutation(createPost, {
     onSuccess: ({ urlSlug }) => {
@@ -21,36 +16,48 @@ const PostNew = () => {
     onError: () => alert('Save failed :(')
   })
 
+  const [title, setTitle]           = useState('')
+  const [urlSlug, setUrlSlug]       = useState('')
+  const [tags, setTags]             = useState('')
+  const [content, setContent]       = useState([contentBlock()])
+  const [titleImage, setTitleImage] = useState(null)
+
   useEffect(() => {
     if (title) {
       setUrlSlug(normalizeUrlSlug(title))
     }
   }, [title])
 
-  const changeContent = (i, property, value) => {
+  const changeContent = (uid, property, value) => {
     const newContent = [...content]
-    newContent[i][property] = value
+    const block      = newContent.find(b => b.uid === uid)
+
+    if (property === 'image') {
+      contentImages.current[uid] = value
+    } else {
+      newContent.find(b => b.uid === uid)[property] = value
+    }
+
     setContent(newContent)
   }
 
   const addContent = () => {
-    setContent([...content, { type: 'text' }])
+    setContent([...content, contentBlock()])
   }
 
-  const removeContent = (idx) => {
-    setContent(content.filter((_, i) => i !== idx))
+  const removeContent = (uid) => {
+    setContent(content.filter((block) => block.uid !== uid))
   }
 
   const submit = async () => {
     mutation.mutate(
-      getFormData(title, urlSlug, tags, content, titleImage)
+      getFormData(title, urlSlug, tags, titleImage, content, contentImages.current)
     )
   }
 
-  const renderContentBlock = (cntn, idx) => (
-    <ContentBlock {...cntn}
-                  key={idx}
-                  idx={idx}
+  const renderContentBlock = (block) => (
+    <ContentBlock {...block}
+                  key={block.uid}
                   onChange={changeContent}
                   onRemove={removeContent} />
   )

@@ -38,7 +38,7 @@ export const Input = ({ id, value, onChange, label, type, rows, errors = [] }) =
   )
 }
 
-export const ContentBlock = ({ type, image, text, onChange, onRemove, idx }) => {
+export const ContentBlock = ({ type, image, text, onChange, onRemove, uid }) => {
   const isImage = type === 'image'
   const rows    = type === 'header' ? 1 : 6
 
@@ -47,28 +47,28 @@ export const ContentBlock = ({ type, image, text, onChange, onRemove, idx }) => 
       <div className='flex'>
         <select className='border-gray-300 border rounded-md block w-full py-1 px-2 mr-5'
                 value={type}
-                onChange={e => onChange(idx, 'type', e.target.value)}>
+                onChange={e => onChange(uid, 'type', e.target.value)}>
           {Object.keys(componentMap).map(option =>
             <option key={option} value={option}>{option}</option>
           )}
         </select>
 
-        <Button color='red-700' onClick={() => onRemove(idx)}>
+        <Button color='red-700' onClick={() => onRemove(uid)}>
           Remove
         </Button>
       </div>
 
       {!isImage && type !== 'divider' &&
-        <Input id={`text-${idx}`}
+        <Input id={`text-${uid}`}
                value={text || ''}
-               onChange={value => onChange(idx, 'text', value)}
+               onChange={value => onChange(uid, 'text', value)}
                type='textarea'
                rows={rows} />
       }
 
       {isImage &&
-        <Input id={`image-${idx}`}
-               onChange={value => onChange(idx, 'image', value)}
+        <Input id={`image-${uid}`}
+               onChange={value => onChange(uid, 'image', value)}
                label='File'
                type='file' />
       }
@@ -76,33 +76,18 @@ export const ContentBlock = ({ type, image, text, onChange, onRemove, idx }) => 
   )
 }
 
-const file = (original) => {
-  if (!original) return null
-
-  const name = Math.random().toString(36).substring(2, 13)
-
-  return new File([original], name, { type: original.type })
-}
-
-export const getFormData = (title, urlSlug, tags, content, titleImage) => {
+export const getFormData = (title, urlSlug, tags, titleImage, content, contentImages) => {
   const formData = new FormData
 
-  const mappedContent = content.map(c => {
-    if (c.image instanceof File) {
-      const image = file(c.image)
-
-      formData.append('post[images]', image)
-      return { ...c, image: image.name }
-    } else {
-      return c
-    }
+  Object.entries(contentImages).forEach(([key, image]) => {
+    formData.append(key, image)
   })
 
   formData.append('post[title]', title)
   formData.append('post[urlSlug]', urlSlug)
   formData.append('post[tags]', tags)
-  formData.append('post[titleImage]', file(titleImage))
-  formData.append('post[content]', JSON.stringify(mappedContent))
+  formData.append('post[titleImage]', titleImage)
+  formData.append('post[content]', JSON.stringify(content))
 
   return formData
 }
@@ -114,3 +99,5 @@ export const normalizeUrlSlug = (string) => (
 export const SecretInput = () => (
   <input className='border-gray-300 border rounded-md block w-full py-1 px-2 my-4' id='secret' autoComplete='off' />
 )
+
+export const contentBlock = () => ({ type: 'text', uid: Date.now().toString() })

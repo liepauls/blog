@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
 
 import NotFound from './notFound'
 import { getPost } from '../utils/apiRequests'
@@ -20,49 +19,6 @@ const Post = () => {
   const { isLoading, error, data } = useQuery('post', () => getPost(slug), { retry: false })
 
   const post = data || context.post || {}
-
-  useEffect(() => {
-    // if (!post.title) return
-    // const ogTitle = document.createElement('meta')
-    // ogTitle.setAttribute('property', 'og:title')
-    // ogTitle.setAttribute('content', post.title)
-    // document.querySelector('head').appendChild(ogTitle)
-
-    // const ogDescription = document.createElement('meta')
-    // ogDescription.setAttribute('property', 'og:description')
-    // ogDescription.setAttribute('content', post.preview)
-    // document.querySelector('head').appendChild(ogDescription)
-
-    // const ogType = document.createElement('meta')
-    // ogType.setAttribute('property', 'og:type')
-    // ogType.setAttribute('content', 'article')
-    // document.querySelector('head').appendChild(ogType)
-
-    // const ogUrl = document.createElement('meta')
-    // ogUrl.setAttribute('property', 'og:url')
-    // ogUrl.setAttribute('content', window.location)
-    // document.querySelector('head').appendChild(ogUrl)
-
-    // const ogImage = document.createElement('meta')
-    // ogImage.setAttribute('property', 'og:image')
-    // ogImage.setAttribute('content', post.titleImage)
-    // document.querySelector('head').appendChild(ogImage)
-
-    // const ogPublishedAt = document.createElement('meta')
-    // ogPublishedAt.setAttribute('property', 'article:published_time')
-    // ogPublishedAt.setAttribute('content', post.createdAt)
-    // document.querySelector('head').appendChild(ogPublishedAt)
-
-    // const ogAuthor = document.createElement('meta')
-    // ogAuthor.setAttribute('property', 'article:author')
-    // ogAuthor.setAttribute('content', 'Pauls Liepa')
-    // document.querySelector('head').appendChild(ogAuthor)
-
-    // const ogTag = document.createElement('meta')
-    // ogTag.setAttribute('property', 'article:tag')
-    // ogTag.setAttribute('content', post.tags.join(','))
-    // document.querySelector('head').appendChild(ogTag)
-  }, [post.title])
 
   let unlisten
   useEffect(() => (
@@ -104,16 +60,6 @@ const Post = () => {
   } else if (!isLoading) {
     return (
       <div className='blog'>
-        <Helmet>
-          <meta property='og:title' content={post.title} />
-          <meta property='og:type' content='article' />
-          <meta property='og:url' content={window.location} />
-          <meta property='og:image' content={post.titleImage} />
-          <meta property='article:published_time' content={post.createdAt} />
-          <meta property='article:author' content='Pauls Liepa' />
-          <meta property='article:tag' content={post.tags.join(', ')} />
-        </Helmet>
-
         <div className='container text-container'>
           {renderBackButton('my-3 md:my-5')}
 

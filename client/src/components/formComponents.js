@@ -2,6 +2,10 @@ import React, { useRef } from 'react'
 
 import { componentMap } from '../components/blogBlocks'
 
+// border-gray-700  text-gray-700
+// border-red-700   text-red-700
+// border-blue-700  text-blue-700
+// border-green-700 text-green-700
 export const Button = ({ children, color, onClick, className }) => (
   <button className={`border px-5 py-2 rounded-md border-${color} text-${color} ${className}`} onClick={onClick}>
     {children}

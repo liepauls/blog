@@ -64,7 +64,7 @@ const PostNew = () => {
 
   return (
     <div className='blog'>
-      <div className='container text-container'>
+      <div className='container text-container pb-8 md:pb-12'>
         <SecretInput />
 
         <Input id='title' value={title} onChange={setTitle} label='Title' errors={mutation.error?.errors} />

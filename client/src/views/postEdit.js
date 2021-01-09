@@ -110,7 +110,7 @@ const PostEdit = () => {
 
   return (
     <div className='blog'>
-      <div className='container text-container'>
+      <div className='container text-container pb-8 md:pb-12'>
         <div className='flex'>
           <Button color='gray-700' onClick={visitPost} className='mt-5 w-30 block ml-auto'>Preview</Button>
           {renderPublishButton()}

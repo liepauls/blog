@@ -75,7 +75,7 @@ const Post = () => {
             {post.content?.map(renderContent)}
           </div>
 
-          {renderBackButton('mt-8 md:mt-12')}
+          {renderBackButton('mt-10 pb-8 md:mt-16 md:pb-12')}
         </div>
       </div>
     )

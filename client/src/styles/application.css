@@ -30,7 +30,6 @@ img {
   .text-container {
     max-width: 740px;
     margin: auto;
-    padding-bottom: 5rem;
   }
 }
 
@@ -38,7 +37,6 @@ img {
   .text-container {
     max-width: calc(100% - 2rem);
     margin: 0 1rem;
-    padding-bottom: 5rem;
   }
 }
 

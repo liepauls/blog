@@ -23,12 +23,12 @@ const PostsIndex = () => {
            alt=''
            onLoad={() => setShadow(true)} />
 
-      <div className='container text-container'>
+      <div className='container text-container pb-5'>
         {data?.map((post, idx) => (
           <React.Fragment key={post.id}>
             {idx > 0 && <hr className='mx-auto w-4/5 border-gray-150' />}
 
-            <div className='md:flex my-5 md:my-20'>
+            <div className='md:flex my-6 md:my-16'>
               <Link to={`/posts/${post.urlSlug}`} onClick={() => setPost(post)}>
                 <div className='w-full md:h-44 md:w-44 rounded-lg overflow-hidden safari-scale-wrapper'>
                   <Image className='rounded-lg transform-gpu hover:scale-110 duration-150'

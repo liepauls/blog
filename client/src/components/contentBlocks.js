@@ -103,7 +103,9 @@ const Divider = () => (
 const Image = ({ src }) => {
   return (
     <div className='w-5/6 mx-auto my-12'>
-      <ImageComponent src={src} />
+      <a href={src} target='_blank'>
+        <ImageComponent src={src} />
+      </a>
     </div>
   )
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useMutation } from 'react-query'
 import { useHistory } from 'react-router-dom'
 
-import { componentMap } from '../components/blogBlocks'
 import { Button, Input, ContentBlock, SecretInput, getFormData, normalizeUrlSlug, contentBlock } from '../components/formComponents'
 import { createPost } from '../utils/apiRequests'
 

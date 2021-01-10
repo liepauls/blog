@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom'
 
 import { Button, Input, ContentBlock, SecretInput, getFormData, normalizeUrlSlug, contentBlock } from '../components/formComponents'
 import { getPost, updatePost, publishPost, unpublishPost, deletePost } from '../utils/apiRequests'
-import { componentMap } from '../components/blogBlocks'
 import Image from '../components/image'
 
 const PostEdit = () => {

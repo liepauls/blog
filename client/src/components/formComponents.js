@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 
-import { componentMap } from '../components/blogBlocks'
+import { componentMap } from '../components/contentBlocks'
 
 // border-gray-700  text-gray-700
 // border-red-700   text-red-700

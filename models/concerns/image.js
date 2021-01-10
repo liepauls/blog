@@ -20,9 +20,10 @@ class Image {
     const filename = uuid.v4()
 
     s3.putObject({
-      Bucket: process.env.S3_BUCKET,
-      Key:    filename,
-      Body:   file.buffer
+      Bucket:      process.env.S3_BUCKET,
+      Key:         filename,
+      Body:        file.buffer,
+      ContentType: file.mimetype
     }, console.log)
 
     return filename

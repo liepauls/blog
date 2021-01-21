@@ -101,7 +101,7 @@ export const normalizeUrlSlug = (string) => (
 )
 
 export const SecretInput = () => (
-  <input className='border-gray-300 border rounded-md block w-full py-1 px-2 my-4' id='secret' autoComplete='off' />
+  <input className='border-gray-300 border rounded-md block w-full py-1 px-2 my-4' id='secret' autoComplete='off' type='password' />
 )
 
 export const contentBlock = () => ({ type: 'text', uid: Date.now().toString() })

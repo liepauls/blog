@@ -65,7 +65,7 @@ const Post = () => {
 
           <Image src={post.titleImage} />
 
-          <PostInfo date={post.createdAt} readTime={post.readTime} className='mt-10 mb-1' />
+          <PostInfo date={post.publishedAt} readTime={post.readTime} className='mt-10 mb-1' />
 
           <h2 className='text-4xl font-semibold'>{post.title}</h2>
 

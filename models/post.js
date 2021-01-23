@@ -65,6 +65,9 @@ module.exports = (sequelize, DataTypes) => {
       get() {
         return new Image(this.getDataValue('titleImage'))
       }
+    },
+    publishedAt: {
+      type: DataTypes.DATE
     }
   }, {
     scopes: {

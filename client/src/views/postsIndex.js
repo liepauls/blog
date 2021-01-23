@@ -37,7 +37,7 @@ const PostsIndex = () => {
               </Link>
 
               <div className='md:ml-5'>
-                <PostInfo date={post.createdAt} readTime={post.readTime} className='mt-2 md:mt-0' />
+                <PostInfo date={post.publishedAt} readTime={post.readTime} className='mt-2 md:mt-0' />
 
                 <Link to={`/posts/${post.urlSlug}`} onClick={() => setPost(post)}>
                   <h2 className='text-2xl font-semibold mb-1 hover:text-blue-900'>{post.title}</h2>

@@ -82,13 +82,13 @@ router.put('/:id', getUploads(), async (request, response) => {
 
 router.put('/:id/publish', async (request, response) => {
   perform(request, response, (post) => (
-    post.update({ isPublished: true })
+    post.update({ isPublished: true, publishedAt: new Date() })
   ))
 })
 
 router.put('/:id/unpublish', async (request, response) => {
   perform(request, response, (post) => (
-    post.update({ isPublished: false })
+    post.update({ isPublished: false, publishedAt: null })
   ))
 })
 

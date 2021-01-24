@@ -8,28 +8,21 @@ import PostInfo from '../components/postInfo'
 import Tags from '../components/tags'
 import Image from '../components/image'
 
-import splash from '../../images/splash.jpg'
-
 const PostsIndex = () => {
   const { isLoading, error, data } = useQuery('posts', getPosts)
 
-  const [shadow, setShadow] = useState(null)
-  const { setPost }         = useContext(Context)
+  const { setPost } = useContext(Context)
+  const navProps    = (post) => ({ to: `/posts/${post.urlSlug}`, onClick: () => setPost(post) })
 
   return (
     <div className='blog'>
-      <img className={`object-cover w-screen splash ${shadow && 'shadow-md'}`}
-           src={splash}
-           alt=''
-           onLoad={() => setShadow(true)} />
-
       <div className='container text-container pb-5'>
         {data?.map((post, idx) => (
           <React.Fragment key={post.id}>
             {idx > 0 && <hr className='mx-auto w-4/5 block border-gray-150 my-10 md:my-0' />}
 
             <div className='md:flex my-6 md:my-16'>
-              <Link to={`/posts/${post.urlSlug}`} onClick={() => setPost(post)}>
+              <Link {...navProps(post)}>
                 <div className='w-full md:h-44 md:w-44 rounded-lg overflow-hidden safari-scale-wrapper'>
                   <Image className='rounded-lg transform-gpu hover:scale-110 duration-150'
                          src={post.titleImage} />
@@ -39,7 +32,7 @@ const PostsIndex = () => {
               <div className='md:ml-5'>
                 <PostInfo date={post.publishedAt} readTime={post.readTime} className='mt-2 md:mt-0' />
 
-                <Link to={`/posts/${post.urlSlug}`} onClick={() => setPost(post)}>
+                <Link {...navProps(post)}>
                   <h2 className='text-2xl font-semibold mb-1 hover:text-blue-900'>{post.title}</h2>
                 </Link>
 

@@ -12,11 +12,6 @@ img {
   max-width: unset;
 }
 
-.splash {
-  height: 25vh;
-  filter: grayscale(0.9);
-}
-
 .blog {
   min-height: 100vh;
   background: linear-gradient(0deg, rgba(243, 244, 247, 1), rgba(255, 255, 255, 1));

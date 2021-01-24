@@ -48,7 +48,7 @@ export const ContentBlock = ({ type, image, text, onChange, onRemove, uid }) => 
 
   return (
     <div className='border p-3 pb-0 rounded-md border-gray-300 mt-5'>
-      <div className='flex  mb-4'>
+      <div className='flex mb-4'>
         <select className='border-gray-300 border rounded-md block w-full py-1 px-2 mr-5'
                 value={type}
                 onChange={e => onChange(uid, 'type', e.target.value)}>

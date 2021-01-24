@@ -57,6 +57,9 @@ module.exports = (sequelize, DataTypes) => {
     isPublished: {
       type: DataTypes.BOOLEAN
     },
+    publishedAt: {
+      type: DataTypes.DATE
+    },
     tags: {
       type: DataTypes.ARRAY(DataTypes.STRING)
     },
@@ -65,15 +68,12 @@ module.exports = (sequelize, DataTypes) => {
       get() {
         return new Image(this.getDataValue('titleImage'))
       }
-    },
-    publishedAt: {
-      type: DataTypes.DATE
     }
   }, {
     scopes: {
       published: {
         where: { isPublished: true },
-        order: [['createdAt', 'DESC']]
+        order: [['publishedAt', 'DESC']]
       }
     },
     sequelize,

@@ -60,6 +60,10 @@ const Header = ({ children }) => (
   <h2 className='text-3xl font-semibold mb-3 mt-14'>{children}</h2>
 )
 
+const Header2 = ({ children }) => (
+  <h3 className='text-2xl font-semibold mb-3 mt-8'>{children}</h3>
+)
+
 const Text = ({ children }) => (
   <p className='text-justify leading-relaxed text-lg'>{withNewlines(children).map(urlifyText)}</p>
 )
@@ -112,6 +116,7 @@ const Image = ({ src }) => {
 
 export const componentMap = {
   header: Header,
+  header2: Header2,
   text: Text,
   list: List,
   numberedList: NumberedList,

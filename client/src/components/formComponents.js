@@ -27,7 +27,7 @@ export const Input = ({ id, value, onChange, label, type, rows, errors = [] }) =
   }
 
   return (
-    <div className='my-4'>
+    <div className='mb-4'>
       {label && <label htmlFor={id} className='block mb-1'>{label}</label>}
       <Component id={id}
                  className={className}
@@ -44,11 +44,11 @@ export const Input = ({ id, value, onChange, label, type, rows, errors = [] }) =
 
 export const ContentBlock = ({ type, image, text, onChange, onRemove, uid }) => {
   const isImage = type === 'image'
-  const rows    = type === 'header' ? 1 : 6
+  const rows    = type === 'header' || type === 'header2' ? 1 : 6
 
   return (
     <div className='border p-3 pb-0 rounded-md border-gray-300 mt-5'>
-      <div className='flex'>
+      <div className='flex  mb-4'>
         <select className='border-gray-300 border rounded-md block w-full py-1 px-2 mr-5'
                 value={type}
                 onChange={e => onChange(uid, 'type', e.target.value)}>

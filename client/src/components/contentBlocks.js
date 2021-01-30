@@ -93,7 +93,7 @@ const CodeBlock = ({ children }) => {
 
   return (
     <pre className='my-6'>
-      <code ref={ref} className='text-sm border border-gray-100'>
+      <code ref={ref} className='text-sm'>
         {children}
       </code>
     </pre>

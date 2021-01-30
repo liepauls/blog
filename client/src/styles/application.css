@@ -12,6 +12,11 @@ img {
   max-width: unset;
 }
 
+code.hljs {
+  box-shadow: 0 0 5px 0 #F2F2F2;
+  background-color: #F6F6F6;
+}
+
 .safari-scale-wrapper {
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }

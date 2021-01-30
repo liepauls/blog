@@ -25,5 +25,5 @@ ReactDOM.render(
       <Application />
     </QueryClientProvider>
   </BrowserRouter>,
-  document.getElementById('root')
+  document.getElementById('blog')
 )

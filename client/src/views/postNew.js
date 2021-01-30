@@ -62,21 +62,19 @@ const PostNew = () => {
   )
 
   return (
-    <div className='blog'>
-      <div className='container text-container pb-8 md:pb-12'>
-        <SecretInput />
+    <div className='container text-container pb-8 md:pb-12'>
+      <SecretInput />
 
-        <Input id='title' value={title} onChange={setTitle} label='Title' errors={mutation.error?.errors} />
-        <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={mutation.error?.errors} />
-        <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={mutation.error?.errors} />
+      <Input id='title' value={title} onChange={setTitle} label='Title' errors={mutation.error?.errors} />
+      <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={mutation.error?.errors} />
+      <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={mutation.error?.errors} />
 
-        <Input id='titleImage' label='Title image' type='file' onChange={setTitleImage} />
+      <Input id='titleImage' label='Title image' type='file' onChange={setTitleImage} />
 
-        {content.map(renderContentBlock)}
+      {content.map(renderContentBlock)}
 
-        <Button color='blue-700' onClick={addContent} className='mt-5 w-52 block mx-auto'>Add content block</Button>
-        <Button color='green-700' onClick={submit} className='mt-5 w-52 block mx-auto'>Save</Button>
-      </div>
+      <Button color='blue-700' onClick={addContent} className='mt-5 w-52 block mx-auto'>Add content block</Button>
+      <Button color='green-700' onClick={submit} className='mt-5 w-52 block mx-auto'>Save</Button>
     </div>
   )
 }

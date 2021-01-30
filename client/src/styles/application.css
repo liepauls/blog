@@ -12,9 +12,8 @@ img {
   max-width: unset;
 }
 
-.blog {
+#blog {
   min-height: 100vh;
-  background: linear-gradient(0deg, rgba(243, 244, 247, 1), rgba(255, 255, 255, 1));
 }
 
 .safari-scale-wrapper {

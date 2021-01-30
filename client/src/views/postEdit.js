@@ -108,28 +108,26 @@ const PostEdit = () => {
   }
 
   return (
-    <div className='blog'>
-      <div className='container text-container pb-8 md:pb-12'>
-        <div className='flex'>
-          <Button color='gray-700' onClick={visitPost} className='mt-5 w-30 block ml-auto'>Preview</Button>
-          {renderPublishButton()}
-          <Button color='red-700' onClick={() => deleteMutation.mutate(post.id)} className='mt-5 w-30 block ml-3'>Delete</Button>
-        </div>
-
-        <SecretInput />
-
-        <Input id='title' value={title} onChange={setTitle} label='Title' errors={mutation.error?.errors} />
-        <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={mutation.error?.errors} />
-        <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={mutation.error?.errors} />
-
-        <Input id='titleImage' label='Title image' type='file' onChange={setTitleImage} />
-        {post.titleImage && <Image className='mb-10' src={post.titleImage} />}
-
-        {content.map(renderContentBlock)}
-
-        <Button color='blue-700' onClick={addContent} className='mt-5 w-52 block mx-auto'>Add content block</Button>
-        <Button color='green-700' onClick={submit} className='mt-5 w-52 block mx-auto'>Save</Button>
+    <div className='container text-container pb-8 md:pb-12'>
+      <div className='flex'>
+        <Button color='gray-700' onClick={visitPost} className='mt-5 w-30 block ml-auto'>Preview</Button>
+        {renderPublishButton()}
+        <Button color='red-700' onClick={() => deleteMutation.mutate(post.id)} className='mt-5 w-30 block ml-3'>Delete</Button>
       </div>
+
+      <SecretInput />
+
+      <Input id='title' value={title} onChange={setTitle} label='Title' errors={mutation.error?.errors} />
+      <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={mutation.error?.errors} />
+      <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={mutation.error?.errors} />
+
+      <Input id='titleImage' label='Title image' type='file' onChange={setTitleImage} />
+      {post.titleImage && <Image className='mb-10' src={post.titleImage} />}
+
+      {content.map(renderContentBlock)}
+
+      <Button color='blue-700' onClick={addContent} className='mt-5 w-52 block mx-auto'>Add content block</Button>
+      <Button color='green-700' onClick={submit} className='mt-5 w-52 block mx-auto'>Save</Button>
     </div>
   )
 }

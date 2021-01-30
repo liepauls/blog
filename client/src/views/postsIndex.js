@@ -15,35 +15,33 @@ const PostsIndex = () => {
   const navProps    = (post) => ({ to: `/posts/${post.urlSlug}`, onClick: () => setPost(post) })
 
   return (
-    <div className='blog'>
-      <div className='container text-container pb-5'>
-        {data?.map((post, idx) => (
-          <React.Fragment key={post.id}>
-            {idx > 0 && <hr className='mx-auto w-4/5 block border-gray-150 my-10 md:my-0' />}
+    <div className='container text-container pb-5'>
+      {data?.map((post, idx) => (
+        <React.Fragment key={post.id}>
+          {idx > 0 && <hr className='mx-auto w-4/5 block border-gray-150 my-10 md:my-0' />}
 
-            <div className='md:flex my-6 md:my-16'>
+          <div className='md:flex my-6 md:my-16'>
+            <Link {...navProps(post)}>
+              <div className='w-full md:h-44 md:w-44 rounded-lg overflow-hidden safari-scale-wrapper'>
+                <Image className='rounded-lg transform-gpu hover:scale-110 duration-150'
+                       src={post.titleImage} />
+              </div>
+            </Link>
+
+            <div className='md:ml-5'>
+              <PostInfo date={post.publishedAt} readTime={post.readTime} className='mt-2 md:mt-0' />
+
               <Link {...navProps(post)}>
-                <div className='w-full md:h-44 md:w-44 rounded-lg overflow-hidden safari-scale-wrapper'>
-                  <Image className='rounded-lg transform-gpu hover:scale-110 duration-150'
-                         src={post.titleImage} />
-                </div>
+                <h2 className='text-2xl font-semibold mb-1 hover:text-blue-900'>{post.title}</h2>
               </Link>
 
-              <div className='md:ml-5'>
-                <PostInfo date={post.publishedAt} readTime={post.readTime} className='mt-2 md:mt-0' />
+              <p className='text-justify'>{post.preview}</p>
 
-                <Link {...navProps(post)}>
-                  <h2 className='text-2xl font-semibold mb-1 hover:text-blue-900'>{post.title}</h2>
-                </Link>
-
-                <p className='text-justify'>{post.preview}</p>
-
-                <Tags tags={post.tags} className='mt-3' />
-              </div>
+              <Tags tags={post.tags} className='mt-3' />
             </div>
-          </React.Fragment>
-        ))}
-      </div>
+          </div>
+        </React.Fragment>
+      ))}
     </div>
   )
 }

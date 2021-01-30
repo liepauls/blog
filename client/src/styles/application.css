@@ -12,10 +12,6 @@ img {
   max-width: unset;
 }
 
-#blog {
-  min-height: 100vh;
-}
-
 .safari-scale-wrapper {
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }

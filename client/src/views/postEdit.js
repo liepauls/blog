@@ -107,6 +107,8 @@ const PostEdit = () => {
     }
   }
 
+  const errors = mutation.error?.errors
+
   return (
     <div className='container text-container pb-8 md:pb-12'>
       <div className='flex'>
@@ -117,9 +119,9 @@ const PostEdit = () => {
 
       <SecretInput />
 
-      <Input id='title' value={title} onChange={setTitle} label='Title' errors={mutation.error?.errors} />
-      <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={mutation.error?.errors} />
-      <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={mutation.error?.errors} />
+      <Input id='title' value={title} onChange={setTitle} label='Title' errors={errors} />
+      <Input id='urlSlug' value={urlSlug} onChange={setUrlSlug} label='URL slug' errors={errors} />
+      <Input id='tags' value={tags} onChange={setTags} label='Tags' errors={errors} />
 
       <Input id='titleImage' label='Title image' type='file' onChange={setTitleImage} />
       {post.titleImage && <Image className='mb-10' src={post.titleImage} />}

@@ -51,11 +51,13 @@ const findPost = (urlSlug) => (
 const setMetaAndRender = (response, post) => {
   const document = cheerio.load(fs.readFileSync('./client/build/index.html', 'utf8'))
 
-  document('[property="og:title"]').attr('content', post.title)
-  document('[property="og:description"]').attr('content', post.preview)
-  document('[property="article:tag"]').attr('content', post.tags.join(', '))
-  document('[property="og:image"]').attr('content', post.titleImage.getUrl())
-  document('[property="article:published_time"]').attr('content', post.createdAt.toISOString())
+  document('meta[name=description]').attr('content', post.preview)
+  document('meta[name=keywords]').attr('content', post.tags.join(', '))
+  document('meta[property="og:title"]').attr('content', post.title)
+  document('meta[property="og:description"]').attr('content', post.preview)
+  document('meta[property="article:tag"]').attr('content', post.tags.join(', '))
+  document('meta[property="og:image"]').attr('content', post.titleImage.getUrl())
+  document('meta[property="article:published_time"]').attr('content', post.createdAt.toISOString())
 
   response.send(document.html())
 }

@@ -10,6 +10,7 @@ import { componentMap } from '../components/contentBlocks'
 import PostInfo from '../components/postInfo'
 import Tags from '../components/tags'
 import Image from '../components/image'
+import ContentWrapper from '../components/contentWrapper'
 
 const Post = () => {
   const { slug } = useParams()
@@ -59,7 +60,7 @@ const Post = () => {
     return <NotFound />
   } else if (!isLoading) {
     return (
-      <div className='container text-container'>
+      <ContentWrapper>
         {renderBackButton('my-3 md:my-5')}
 
         <Image src={post.titleImage} />
@@ -75,7 +76,7 @@ const Post = () => {
         </div>
 
         {renderBackButton('mt-10 pb-8 md:mt-16 md:pb-12')}
-      </div>
+      </ContentWrapper>
     )
   } else {
     return null

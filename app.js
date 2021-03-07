@@ -10,13 +10,10 @@ const { router: postsRouter } = require('./routes/posts')
 const app  = express()
 const prod = process.env.NODE_ENV === 'production'
 
-sentry.init({ dsn: 'https://cef620f22b8c4d1d94a6d6a69b26a9fd@o502416.ingest.sentry.io/5584774' })
-
 if (prod) {
+  sentry.init({ dsn: 'https://cef620f22b8c4d1d94a6d6a69b26a9fd@o502416.ingest.sentry.io/5584774' })
   app.use(sentry.Handlers.requestHandler())
-}
 
-if (prod) {
   app.use((request, response, next) => {
     if (request.get('X-Forwarded-Proto') !== 'https') {
       return response.redirect(`https://${request.get('host')}${request.url}`)

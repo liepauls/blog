@@ -21,17 +21,15 @@ code.hljs {
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
-@media (min-width: 769px) {
-  .text-container {
-    overflow-wrap: break-word;
-    max-width: 740px;
-    margin: auto;
-  }
+.text-container {
+  overflow: auto;
+  overflow-wrap: break-word;
+  max-width: 740px;
+  margin: auto;
 }
 
 @media (max-width: 768px) {
   .text-container {
-    overflow-wrap: break-word;
     max-width: calc(100% - 2rem);
     margin: 0 1rem;
   }

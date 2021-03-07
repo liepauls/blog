@@ -7,6 +7,7 @@ import { Context } from '../components/application'
 import PostInfo from '../components/postInfo'
 import Tags from '../components/tags'
 import Image from '../components/image'
+import ContentWrapper from '../components/contentWrapper'
 
 const PostsIndex = () => {
   const { isLoading, error, data } = useQuery('posts', getPosts)
@@ -15,7 +16,7 @@ const PostsIndex = () => {
   const navProps    = (post) => ({ to: `/posts/${post.urlSlug}`, onClick: () => setPost(post) })
 
   return (
-    <div className='container text-container pb-5'>
+    <ContentWrapper>
       {data?.map((post, idx) => (
         <React.Fragment key={post.id}>
           {idx > 0 && <hr className='mx-auto w-4/5 block border-gray-150 my-10 md:my-0' />}
@@ -42,7 +43,7 @@ const PostsIndex = () => {
           </div>
         </React.Fragment>
       ))}
-    </div>
+    </ContentWrapper>
   )
 }
 

@@ -51,6 +51,7 @@ const findPost = (urlSlug) => (
 const setMetaAndRender = (response, post) => {
   const document = cheerio.load(fs.readFileSync('./client/build/index.html', 'utf8'))
 
+  document('title').text(post.title)
   document('meta[name=description]').attr('content', post.preview)
   document('meta[name=keywords]').attr('content', post.tags.join(', '))
   document('meta[property="og:title"]').attr('content', post.title)

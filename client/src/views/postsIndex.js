@@ -10,7 +10,7 @@ import Image from '../components/image'
 import ContentWrapper from '../components/contentWrapper'
 
 const PostsIndex = () => {
-  const { isLoading, error, data } = useQuery('posts', getPosts)
+  const { data } = useQuery('posts', getPosts)
 
   const { setPost } = useContext(Context)
   const navProps    = (post) => ({ to: `/posts/${post.urlSlug}`, onClick: () => setPost(post) })

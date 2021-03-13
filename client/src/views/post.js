@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect,  } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
@@ -19,7 +19,7 @@ const Post = () => {
 
   const { isLoading, error, data } = useQuery('post', () => getPost(slug), { retry: false })
 
-  const post = data || context.post || {}
+  const post = data || context.post
 
   let unlisten
   useEffect(() => (
@@ -35,6 +35,10 @@ const Post = () => {
       })
     }
   ), [])
+
+  useEffect(() => {
+    context.setPost(post)
+  }, [post])
 
   const renderBackButton = (margin) => (
     <div className={`text-center ${margin}`}>

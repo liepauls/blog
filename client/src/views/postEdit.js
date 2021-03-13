@@ -10,7 +10,7 @@ import Image from '../components/image'
 const PostEdit = () => {
   const history  = useHistory()
   const { slug } = useParams()
-  const { isLoading, error, data } = useQuery('post', () => getPost(slug))
+  const { error, data } = useQuery('post', () => getPost(slug))
   const contentImages = useRef({})
 
   const post = data || {}

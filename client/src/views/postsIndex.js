@@ -19,11 +19,11 @@ const PostsIndex = () => {
     <ContentWrapper>
       {data?.map((post, idx) => (
         <React.Fragment key={post.id}>
-          {idx > 0 && <hr className='mx-auto w-4/5 block border-gray-150 my-10 md:my-0' />}
+          {idx > 0 && <hr className='mx-auto w-2/5 block border-gray-100 my-10 md:my-0' />}
 
-          <div className='md:flex my-6 md:my-16'>
+          <div className='md:flex my-20'>
             <Link {...navProps(post)}>
-              <div className='w-full md:h-44 md:w-44 rounded-lg overflow-hidden safari-scale-wrapper'>
+              <div className='w-full md:h-44 md:w-56 rounded-lg overflow-hidden safari-scale-wrapper'>
                 <Image className='rounded-lg transform-gpu hover:scale-110 duration-150'
                        src={post.titleImage} />
               </div>

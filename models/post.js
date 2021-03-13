@@ -21,12 +21,12 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     get readTime() {
-      return Math.ceil(this.text.split(' ').length / 175)
+      return Math.ceil(this.text.split(' ').length / 180)
     }
 
     get preview() {
-      if (this.text.length > 200) {
-        return `${this.text.slice(0, 200)}...`
+      if (this.text.length > 310) {
+        return `${this.text.slice(0, 310)}...`
       } else {
         return this.text
       }

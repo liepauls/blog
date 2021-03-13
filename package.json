@@ -10,7 +10,7 @@
     "build": "npm run build --prefix client"
   },
   "engines": {
-    "node": "15.0.1"
+    "node": "15.8.0"
   },
   "dependencies": {
     "@sentry/node": "^5.29.2",

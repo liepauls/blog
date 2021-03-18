@@ -16,6 +16,7 @@ Highlight.registerLanguage('xml', xml)
 Highlight.registerLanguage('bash', bash)
 
 import ImageComponent from './image'
+import { normalizeUrlSlug } from './formComponents'
 
 const urlWithLabelRegex = /(https?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]{{[^}}]+}})/gi
 const urlRegex          = /https?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]/i
@@ -57,11 +58,11 @@ const withNewlines = (text) => (
 )
 
 const Header = ({ children }) => (
-  <h2 className='text-3xl font-semibold mb-3 mt-14'>{children}</h2>
+  <h2 id={normalizeUrlSlug(children)} className='text-3xl font-semibold mb-3 mt-14'>{children}</h2>
 )
 
 const Header2 = ({ children }) => (
-  <h3 className='text-2xl font-semibold mb-3 mt-8'>{children}</h3>
+  <h3 id={normalizeUrlSlug(children)} className='text-2xl font-semibold mb-3 mt-8'>{children}</h3>
 )
 
 const Text = ({ children }) => (

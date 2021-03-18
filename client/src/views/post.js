@@ -71,7 +71,7 @@ const Post = () => {
 
         <PostInfo date={post.publishedAt} readTime={post.readTime} className='mt-10 mb-1' />
 
-        <h2 className='text-4xl font-semibold'>{post.title}</h2>
+        <h1 className='text-4xl font-semibold'>{post.title}</h1>
 
         <Tags tags={post.tags} className='mt-2 mb-12' />
 

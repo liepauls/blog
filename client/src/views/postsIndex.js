@@ -33,7 +33,7 @@ const PostsIndex = () => {
               <PostInfo date={post.publishedAt} readTime={post.readTime} className='mt-2 md:mt-0' />
 
               <Link {...navProps(post)}>
-                <h2 className='text-2xl font-semibold mb-1 hover:text-blue-900'>{post.title}</h2>
+                <h1 className='text-2xl font-semibold mb-1 hover:text-blue-900'>{post.title}</h1>
               </Link>
 
               <p className='text-justify'>{post.preview}</p>

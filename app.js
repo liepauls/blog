@@ -31,9 +31,10 @@ app.use(logger('dev'))
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(express.static('./client/build'))
 
 const serveStatic = (response) => response.sendFile('./client/build/index.html', { root: __dirname })
+
+app.use('/assets', express.static('./client/build', { maxAge: '100y' }))
 
 app.use('/api/posts', postsRouter)
 

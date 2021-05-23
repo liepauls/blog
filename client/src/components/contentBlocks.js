@@ -22,6 +22,10 @@ const urlWithLabelRegex = /(https?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/
 const urlRegex          = /https?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]/i
 const labelRegex        = /{{([^}}]+)}}/
 
+const codeRegex = /(`.+`)/
+
+const boldRegex = /(\*.+\*)/
+
 const ifString = (object, callback) => (
   typeof object === 'string' ? callback() : object
 )
@@ -45,6 +49,39 @@ const urlifyText = (text) => (
   ))
 )
 
+const codifyText = (text) => (
+  ifString(text, () => (
+    text.split(codeRegex).map((fragment, idx) => {
+      if (fragment.match(codeRegex)) {
+        return <code key={idx} className='text-sm p-1 bg-gray-200 rounded'>{fragment.replace(/`/g, '')}</code>
+      } else {
+        return fragment
+      }
+    })
+  ))
+)
+
+const boldifyText = (text) => (
+  ifString(text, () => (
+    text.split(boldRegex).map((fragment, idx) => {
+      console.log(fragment)
+      if (fragment.match(boldRegex)) {
+        return <span key={idx} className='font-semibold'>{fragment.replace(/\*/g, '')}</span>
+      } else {
+        return fragment
+      }
+    })
+  ))
+)
+
+const processText = (text) => {
+  if (typeof text === 'string') {
+    return urlifyText(text).flatMap(boldifyText).flatMap(codifyText)
+  } else {
+    return text.flatMap(urlifyText).flatMap(boldifyText).flatMap(codifyText)
+  }
+}
+
 const withNewlines = (text) => (
   ifString(text, () => (
     text.split("\n").map((fragment, idx) => {
@@ -66,13 +103,13 @@ const Header2 = ({ children }) => (
 )
 
 const Text = ({ children }) => (
-  <p className='text-justify leading-relaxed text-lg'>{withNewlines(children).map(urlifyText)}</p>
+  <p className='text-justify leading-relaxed text-lg'>{processText(withNewlines(children))}</p>
 )
 
 const List = ({ children }) => (
   <ul className='list-disc pl-16 mt-3 text-lg'>
     {children.split("\n").map((item, i) => (
-      <li key={i} className='my-1'>{urlifyText(item)}</li>
+      <li key={i} className='my-1'>{processText(item)}</li>
     ))}
   </ul>
 )
@@ -80,7 +117,7 @@ const List = ({ children }) => (
 const NumberedList = ({ children }) => (
   <ul className='list-decimal pl-20 mt-5 text-lg'>
     {children.split("\n").map((item, i) => (
-      <li key={i} className='my-1'>{urlifyText(item)}</li>
+      <li key={i} className='my-1'>{processText(item)}</li>
     ))}
   </ul>
 )

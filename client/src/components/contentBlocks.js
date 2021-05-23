@@ -98,7 +98,7 @@ const Header = ({ children }) => (
 )
 
 const Header2 = ({ children }) => (
-  <h3 id={normalizeUrlSlug(children)} className='text-2xl font-semibold mb-3 mt-8'>{children}</h3>
+  <h3 id={normalizeUrlSlug(children)} className='text-xl font-semibold mb-3 mt-8'>{children}</h3>
 )
 
 const Text = ({ children }) => (

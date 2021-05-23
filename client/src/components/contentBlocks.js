@@ -53,7 +53,7 @@ const codifyText = (text) => (
   ifString(text, () => (
     text.split(codeRegex).map((fragment, idx) => {
       if (fragment.match(codeRegex)) {
-        return <code key={idx} className='text-sm p-1 bg-gray-200 rounded'>{fragment.replace(/`/g, '')}</code>
+        return <code key={idx} className='text-sm p-1 bg-gray-100 rounded'>{fragment.replace(/`/g, '')}</code>
       } else {
         return fragment
       }

@@ -22,9 +22,9 @@ const urlWithLabelRegex = /(https?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/
 const urlRegex          = /https?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]/i
 const labelRegex        = /{{([^}}]+)}}/
 
-const codeRegex = /(`.+`)/
+const codeRegex = /(`[^`]+`)/
 
-const boldRegex = /(\*.+\*)/
+const boldRegex = /(\*[^*]+\*)/
 
 const ifString = (object, callback) => (
   typeof object === 'string' ? callback() : object

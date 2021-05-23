@@ -64,7 +64,6 @@ const codifyText = (text) => (
 const boldifyText = (text) => (
   ifString(text, () => (
     text.split(boldRegex).map((fragment, idx) => {
-      console.log(fragment)
       if (fragment.match(boldRegex)) {
         return <span key={idx} className='font-semibold'>{fragment.replace(/\*/g, '')}</span>
       } else {
@@ -126,7 +125,7 @@ const CodeBlock = ({ children }) => {
   const ref = useRef(null)
 
   useEffect(() => {
-    Highlight.highlightBlock(ref.current)
+    Highlight.highlightElement(ref.current)
   }, [ref.current])
 
   return (
